@@ -8,7 +8,7 @@
                .catch(function(error) {
                    console.log(error);
                })
-       
+
            // turn the data into a list of products shoppingCart
            function parseCartData(data){
        
@@ -23,26 +23,32 @@
 
                 var productInfo = document.createElement("div");
                 productInfo.setAttribute("id", "productInfo"+i);
-                productInfo.innerHTML = 'Name: ' + data[i].name + ' ' + 'Price: ' + data[i].price + ' DKK' + ' pr. styk '
+                productInfo.innerHTML = 'Name: ' + data[i].name + ' ' + 'Price: ' + data[i].price + ' DKK' + ' pr. styk ';
 
 
                 var incrementButton = document.createElement("button");
-                incrementButton.setAttribute("class", "incrementButton")
-                incrementButton.setAttribute("id", "incrementButton"+i)
-                incrementButton.setAttribute("onclick", "increment("+productCount.id+")")
+                incrementButton.setAttribute("class", "incrementButton");
+                incrementButton.setAttribute("value", data[i].price);
+                incrementButton.setAttribute("id", "incrementButton"+i);
+                incrementButton.setAttribute("onclick", "increment("+productCount.id+")");
                 incrementButton.innerHTML = "+";
     
                 var decrementButton = document.createElement("button");
-                decrementButton.setAttribute("class", "decrementButton")
-                decrementButton.setAttribute("id", "decrementButton"+i)
-                decrementButton.setAttribute("onclick", "decrement("+productCount.id+")")
+                decrementButton.setAttribute("class", "decrementButton");
+                decrementButton.setAttribute("id", "decrementButton"+i);
+                decrementButton.setAttribute("onclick", "decrement("+productCount.id+")");
                 decrementButton.innerHTML = "-";
 
                 var deleteButton = document.createElement("button");
-                deleteButton.setAttribute("class", "deleteButton")
-                deleteButton.setAttribute("id", "deleteButton"+i)
-                deleteButton.setAttribute("onclick", "deleteproduct("+productCount.id+")")
+                deleteButton.setAttribute("class", "deleteButton");
+                deleteButton.setAttribute("id", "deleteButton"+i);
+                deleteButton.setAttribute("onclick", "deleteproduct("+productCount.id+")");
                 deleteButton.innerHTML = "x";
+
+                var productCost = document.createElement("div");
+                productCost.setAttribute("class", "productCost");
+                productCost.setAttribute("id", "productCost:"+productCount.id);
+                productCost.innerHTML = "0";
 
                 mainContainer.appendChild(productInfo);
                 
@@ -54,18 +60,40 @@
 
                 mainContainer.appendChild(deleteButton);
 
+                mainContainer.appendChild(productCost);
+
                 }
+
+                var totalCost = document.createElement("div");
+                totalCost.setAttribute("class", "totalCost");
+                totalCost.setAttribute("id", "totalCost:");
+                totalCost.innerHTML = "0";
+
+                mainContainer.appendChild(totalCost);
             }
 
+        
+           function calculateTotal(){
+            var total = 0;
+            var count = document.querySelectorAll(".incrementButton").length
+            for (var i = 0; i < count; i++){
+                total += document.getElementById("incrementButton"+i).value*document.getElementById(i).innerHTML;
+                document.getElementById("totalCost:").innerHTML = total;
 
+            }
+            return total
+           } 
            function increment(x) {
-            document.getElementById(x).innerHTML++;
-            
+           document.getElementById(x).innerHTML++;
+           document.getElementById("productCost:"+x).innerHTML = document.getElementById("incrementButton"+x).value*document.getElementById(x).innerHTML;
+           calculateTotal();
+
            }
            function decrement(x) {
             if (document.getElementById(x).innerHTML !== "0")
             document.getElementById(x).innerHTML--;
-            
+            document.getElementById("productCost:"+x).innerHTML = document.getElementById("incrementButton"+x).value*document.getElementById(x).innerHTML;
+            calculateTotal();
            }
            function deleteproduct(x) {
             document.getElementById("incrementButton"+x).remove();
@@ -73,4 +101,5 @@
             document.getElementById("deleteButton"+x).remove();
             document.getElementById("productInfo"+x).remove();
             document.getElementById(x).remove();
+            calculateTotal();
            }
