@@ -16,6 +16,7 @@ export function createCart({data : cartInfo , count : initial}: any ) {
         <div className = "cart-total" id = "cart-cost">
             {"Total Cart Cost: " + total + " DKK"}
         </div>
+        <div className = "item-row" >  
         {
 
         cartInfo && cartInfo.map((productInfo: { name: string; price: number; id: string }) => {
@@ -46,29 +47,41 @@ export function createCart({data : cartInfo , count : initial}: any ) {
             }
 
             return (
-                <div id = {"item"+productInfo.id}>
-                <h2 className = "product-info" >
-                {'Name: ' + productInfo.name + ' ' + 'Price: ' + productInfo.price + ' DKK' + ' pr. styk '}
-                </h2>
-                {"Amount: " + count}
-                <button className = "increment-button" onClick={() => increment(productInfo.price,)} >
-                +
-                </button>
-                <button className = "decrement-button" onClick={() => decrement(productInfo.price,)} >
-                -
-                </button>
-                <button className = "delete-button" onClick={() => deleteitem(productInfo.id, productInfo.price, count)} >
-                x
-                </button >
-                {"Cost: " + count*productInfo.price + " DKK"} 
+                <div className = "item-card" id = {"item"+productInfo.id}>
+                    <h2 className = "product-info" >
+                    {'Name: ' + productInfo.name + ' ' + 'Price: ' + productInfo.price + ' DKK' + ' pr. styk '}
+                    </h2>
+                    
+                    <div className = "item-amount">
+                        {"Amount: " + count}
+                    </div>
+                    
+                    <div className = "adjusters">
+                        <button className = "decrement-button" onClick={() => decrement(productInfo.price,)} >
+                        -
+                        </button>
+                        <button className = "increment-button" onClick={() => increment(productInfo.price,)} >
+                        +
+                        </button>
+                    </div>
+                    
+                    <button className = "delete-button" onClick={() => deleteitem(productInfo.id, productInfo.price, count)} >
+                    x
+                    </button >
+                    
+                    <div className = "items-cost">
+                    {"Cost: " + count*productInfo.price + " DKK"} 
+                    </div>
+                
                 </div>
         
         
         
             )
+            
 
         })}
-
+        </div>
         </div>
     )
 }
