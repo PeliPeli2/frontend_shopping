@@ -1,5 +1,5 @@
 import React, { EventHandler, MouseEventHandler, ReactEventHandler, useEffect, useState } from "react"
-import * as CartProps from './CartProps'
+
 
 
 export function createCart({data : cartInfo , count : initial}: any ) {
@@ -14,7 +14,7 @@ export function createCart({data : cartInfo , count : initial}: any ) {
     return (
         <div className = "cart">
         <div className = "cart-total" id = "cart-cost">
-            {"Total Cart Cost: " + total}
+            {"Total Cart Cost: " + total + " DKK"}
         </div>
         {
 
@@ -60,7 +60,7 @@ export function createCart({data : cartInfo , count : initial}: any ) {
                 <button className = "delete-button" onClick={() => deleteitem(productInfo.id, productInfo.price, count)} >
                 x
                 </button >
-                {"Amount: " + count*productInfo.price} 
+                {"Cost: " + count*productInfo.price + " DKK"} 
                 </div>
         
         
