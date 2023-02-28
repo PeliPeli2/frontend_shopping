@@ -8,7 +8,7 @@ export default function App() {
     <div className = "app">
       <h1>Shopping Cart</h1>
       <div>
-      <Cart.createCart data={CartData} count={5} />
+      <Cart.createCart data={CartData} count={0} />
       </div>
     </div>
   )

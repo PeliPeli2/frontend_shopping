@@ -7,6 +7,7 @@ export function createCart({data : cartInfo , count : initial}: any ) {
     var initialcost = 0
     cartInfo.map((data: { price: any }) => {
         initialcost = initialcost + data.price * initial
+        
     })
 
     const [total, setTotal] = useState(initialcost)
@@ -18,10 +19,16 @@ export function createCart({data : cartInfo , count : initial}: any ) {
         </div>
         <div className = "item-row" >  
         {
-
+        
+        
         cartInfo && cartInfo.map((productInfo: { name: string; price: number; id: string }) => {
 
-            const [count, setCount] = useState(initial);
+            const [count, setCount]  = useState(0);
+            const [show, setShow] = useState(Math.random());            
+            
+            
+
+            
         
             function increment(cost : any) {
                 setTotal(total+cost)
@@ -45,7 +52,8 @@ export function createCart({data : cartInfo , count : initial}: any ) {
 
 
             }
-
+            if (show > 0.9){
+            
             return (
                 <div className = "item-card" id = {"item"+productInfo.id}>
                     <h2 className = "product-info" >
@@ -76,11 +84,11 @@ export function createCart({data : cartInfo , count : initial}: any ) {
                 </div>
         
         
-        
-            )
-            
 
-        })}
+            )
+            }
+        }
+        )}
         </div>
         </div>
     )
