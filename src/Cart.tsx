@@ -1,12 +1,14 @@
 import React, { EventHandler, MouseEventHandler, ReactEventHandler, useEffect, useState } from "react"
+import CartData from './data.json'
 
 
+export function createCart() {
 
-export function createCart({data : cartInfo , count : initial}: any ) {
-
+    var initialCount = 0
+    
     var initialcost = 0
-    cartInfo.map((data: { price: any }) => {
-        initialcost = initialcost + data.price * initial
+    CartData.map((data: { price: any }) => {
+        initialcost = initialcost + data.price * initialCount
         
     })
 
@@ -18,40 +20,32 @@ export function createCart({data : cartInfo , count : initial}: any ) {
             {"Total Cart Cost: " + total + " DKK"}
         </div>
         <div className = "item-row" >  
+        
         {
         
-        
-        cartInfo && cartInfo.map((productInfo: { name: string; price: number; id: string }) => {
+        CartData && CartData.map((productInfo: { name: string; price: number; id: string }) => {
 
             const [count, setCount]  = useState(0);
             const [show, setShow] = useState(Math.random());            
             
-            
-
-            
-        
             function increment(cost : any) {
                 setTotal(total+cost)
-                setCount(count+1);
-
-        
-                
+                setCount(count+1);    
             }
+
             function decrement(cost : any) {
                 if (count != 0){
                 setCount(count-1);
-                setTotal(total-cost)
-                
+                setTotal(total-cost)    
                 }
-                
             }
+
             function deleteitem(id : any, cost : number, count : number) {
                 setTotal(total-(cost*count))
                 var product = document.getElementById("item"+id)
                 product?.remove()
-
-
             }
+
             if (show > 0.9){
             
             return (
@@ -82,10 +76,7 @@ export function createCart({data : cartInfo , count : initial}: any ) {
                     </div>
                 
                 </div>
-        
-        
-
-            )
+                )
             }
         }
         )}
