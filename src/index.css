@@ -41,6 +41,7 @@ a:hover {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  length: 50%;
 }
 
 .item-card {
@@ -48,6 +49,8 @@ a:hover {
   border-style: outset;
   justify-content: center;
   background-color: #F0EFF4;
+    border-radius: 5px;
+    width: 50%;
 }
 
 .product-info{
@@ -58,7 +61,12 @@ a:hover {
   padding-left: 10px;
   margin-block: auto;
 }
-
+h2{
+  font-size: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-block: auto;
+}
 .item-amount{
   padding-left: 10px;
 }
@@ -67,7 +75,18 @@ a:hover {
   padding-left: 10px;
   padding-bottom: 5px;
 }
+.user-input{
+  position : absolute;
+  right: 0;
+  margin-right: 200px;
+  top: 0;
 
+}
+
+input{
+  width: 500px;
+    height: 30px;
+}
 
 .adjusters{
   display: flex;

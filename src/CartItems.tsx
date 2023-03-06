@@ -33,6 +33,7 @@ export function cartItems({CartData, setTotal, total} : any) : any{
                     <h2 className = "product-info" >
                     {'Name: ' + productInfo.name + ' ' + 'Price: ' + productInfo.price + ' DKK' + ' pr. styk '}
                     </h2>
+
                     
                     <div className = "item-amount">
                         {"Amount: " + count}
@@ -59,5 +60,54 @@ export function cartItems({CartData, setTotal, total} : any) : any{
                 )
             }
         }
+
         ))
+
 }
+// function to get a number from the url "https://api.dataforsyningen.dk/postnumre'2 and check if it is a valid zip code
+export function userinput() {
+    return (
+        <div className = "user-input">
+            <h1> User Input </h1>
+                <form>
+                    <label>
+                        <h2>Country: </h2>
+                        Denmark
+                    </label>
+                    <label>
+                        <h2>Zip Code: </h2>
+                        <input type="number" name="zip" />
+                    </label>
+                    <label>
+                        <h2>City: </h2>
+                        <input type="text" name="city" />
+                    </label>
+                    <label>
+                        <h2>Address: </h2>
+                        <input type="text" name="address" />
+                    </label> <br/>
+                    <label>
+                        <h2>Name: </h2>
+                        <input type="text" name="name" />
+                    </label> <br/>
+                    <label>
+                        <h2>Phone Number: </h2>
+                        <input type="tel" name="phone" />
+                    </label>
+                    <label>
+                        <h2> Email: </h2>
+                        <input type="text" name="email" />
+                    </label> <br/>
+                    <label>
+                        <h2>Company name: </h2>
+                        <input type="text" name="company" />
+                    </label>
+                    <label>
+                        <h2>Company CVR: </h2>
+                        <input type="text" name="cvr" />
+                    </label> <br/>
+                </form>
+            </div>
+    )
+}
+

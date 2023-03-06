@@ -1,4 +1,6 @@
 import * as Cart from './Cart'
+import {userinput} from "./CartItems";
+
 
 
 export default function App() {
@@ -8,6 +10,7 @@ export default function App() {
       <div>
       <Cart.createCart  />
       </div>
+        {userinput()}
     </div>
   )
 }
