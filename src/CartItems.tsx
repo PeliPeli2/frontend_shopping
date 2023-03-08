@@ -27,13 +27,8 @@ export function cartItems({cartdata, setTotal, total} : CartItemsProps){
     return (
         <div>
         {
-        
-        
 
         cartdata && cartdata.map((productInfo) => {
-
-
-
 
             const [show, setShow] = useState(Math.random());        
             const [count, setCount]  = useState(1);
@@ -89,6 +84,7 @@ export function cartItems({cartdata, setTotal, total} : CartItemsProps){
             // randomizer
             if (show > 0.9){      
             
+                //initially calculate total (all items start with a count of 1) & setup initial discount nudges
                 tmptotal = tmptotal+productInfo.price
                 useEffect(()=>{
                     setTotal(tmptotal)
@@ -98,6 +94,7 @@ export function cartItems({cartdata, setTotal, total} : CartItemsProps){
                     }
                 }, [tmptotal])
 
+                // change discount nudge & discount cost depending on item count
                 useEffect(()=> {
                     if (count >= productInfo.rebateQuantity && productInfo.rebateQuantity != 0){
                         document.getElementById("itemdiscount"+productInfo.id)!!.innerHTML = ""
@@ -109,10 +106,6 @@ export function cartItems({cartdata, setTotal, total} : CartItemsProps){
                         document.getElementById("items-discountcost"+productInfo.id)!!.innerHTML = ""
                     }
                 }, [count])
-
-            
-            
-
 
             return (
                 <div key={"key"+productInfo.id} className = "item-card" id = {"item"+productInfo.id}>
@@ -149,16 +142,9 @@ export function cartItems({cartdata, setTotal, total} : CartItemsProps){
                     
                 
                 </div>
-                )
-             
-                
-            }
-            
-        }
-        )
-        }
+                )         
+            }      
+        })}
         </div>
-        )
-        
-        
+    )
 }
