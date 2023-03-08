@@ -30,18 +30,24 @@ export function userinput() {
     async function handleInputChange(event: { target: { value: any } }) {
         const input = event.target.value;
         const zipToCityMap = await fetchnumbers();
-        setUserInput(input);
+        setUserInput(input)
         console.log(zipToCityMap);
         console.log("userInput:", userInput);
         if (await isValidInput({ userInput: input, zipToCityMap })) {
             const city = zipToCityMap.get(input);
             // @ts-ignore
             setCityInput(city);
-            console.log("valid input!");
         }
         else {
-            console.log("Invalid input!");
+            // @ts-ignore
+            if (cityInput == "")
+            setCityInput("")
         }
+
+    }
+    function handleCityInputChange(event: { target: { value: any; }; }) {
+        const input = event.target.value;
+        setCityInput(input);
     }
 
 return (
@@ -60,7 +66,7 @@ return (
                 </label>
                 <label>
                     <h2>City: </h2>
-                    <input type="text" value={cityInput} required name="city" />
+                    <input type="text" value={cityInput} onChange={handleCityInputChange}  required name="city" />
                 </label>
                 <label>
                     <h2>Address: </h2>
