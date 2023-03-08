@@ -93,6 +93,11 @@ export function cartItems({cartdata, setTotal, total} : CartItemsProps){
                         
                     }
                 }, [tmptotal])
+                useEffect(()=> {
+                    if (productInfo.upsellProductId != null){
+                        document.getElementById("itemupsell"+productInfo.id)!!.innerHTML = 'We also offer: ' +productInfo.upsellProductId 
+                    }
+                }, [tmptotal])
 
                 // change discount nudge & discount cost depending on item count
                 useEffect(()=> {
@@ -115,6 +120,9 @@ export function cartItems({cartdata, setTotal, total} : CartItemsProps){
                     <div className = "item-discount" id = {"itemdiscount"+productInfo.id}>
                     
                     </div>
+                    <div className = "item-upsell" id = {"itemupsell"+productInfo.id}>
+
+                    </div>
                     <div className = "item-amount">
                         {"Amount: " + count}
                     </div>
@@ -132,12 +140,13 @@ export function cartItems({cartdata, setTotal, total} : CartItemsProps){
                     <button className = "delete-button" onClick={() => deleteitem(productInfo.id, productInfo.price, productInfo.rebateQuantity, productInfo.rebatePercent)} >
                     x
                     </button >
+                    <div className = "item-pricing"> 
+                        <div className = "items-cost">
+                        {"Cost: " + count*productInfo.price + " " + productInfo.currency} 
+                        </div>
+                        <div className = "items-discountcost" id = {"items-discountcost"+productInfo.id}>
                     
-                    <div className = "items-cost">
-                    {"Cost: " + count*productInfo.price + " " + productInfo.currency} 
-                    </div>
-                    <div className = "items-discountcost" id = {"items-discountcost"+productInfo.id}>
-                    
+                        </div>
                     </div>
                     
                 
