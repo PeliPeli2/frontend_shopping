@@ -1,6 +1,6 @@
 import React, {useEffect, useState } from "react"
 
-interface cartItemsProps {CartData: ({
+interface CartItemsProps {cartdata: ({
     id: string;
     name: string;
     price: number;
@@ -20,7 +20,7 @@ interface cartItemsProps {CartData: ({
 setTotal : (total : number) => void,
 total : number}
 
-export function cartItems({CartData, setTotal, total} : cartItemsProps){
+export function cartItems({cartdata, setTotal, total} : CartItemsProps){
 
     var tmptotal = 0
 
@@ -30,7 +30,7 @@ export function cartItems({CartData, setTotal, total} : cartItemsProps){
         
         
 
-        CartData && CartData.map((productInfo) => {
+        cartdata && cartdata.map((productInfo) => {
 
 
 
@@ -39,23 +39,47 @@ export function cartItems({CartData, setTotal, total} : cartItemsProps){
             const [count, setCount]  = useState(1);
             
             
-            function increment(cost : number) {
-                setTotal(total+cost)
-                setCount(count+1);    
+            function increment(cost : number, discountQuantity : number, discountPercent : number) {
+                setCount(count+1);
+                if (count+1 == discountQuantity){
+                    // removing discount for each count from total & increasing total by discounted price of next item
+                    setTotal(total+cost*(((100-discountPercent)/100))-(count*(cost*(discountPercent/100))))
+                }
+                else if (count+1 > discountQuantity){
+                    //increasing total by discounted price
+                    setTotal(total+cost*(((100-discountPercent)/100)))
+                }
+                else {
+                    setTotal(total+cost)
+                }
+
             }
 
-            function incrementInitialTotal(price: number){
-                setTotal(total+price)
-            }
-            function decrement(cost : number) {
+            function decrement(cost : number, discountQuantity : number, discountPercent : number) {
                 if (count != 1){
-                setCount(count-1);
-                setTotal(total-cost)    
+                    setCount(count-1);
+                    if (count == discountQuantity){
+                        //adding back the prediscount price to total for the remaining items
+                        setTotal(total-cost*(((100-discountPercent)/100))+((count-1)*(cost*(discountPercent/100))))
+                    }
+                    else if (count > discountQuantity){
+                        //removing discounted price from total
+                        setTotal(total-cost*(((100-discountPercent)/100)))
+                    }
+                    else {
+                        setTotal(total-cost)
+                    }
+
                 }
             }
 
-            function deleteitem(id : string, cost : number, count : number) {
-                setTotal(total-(cost*count))
+            function deleteitem(id : string, cost : number, discountQuantity : number, discountPercent : number) {
+                if (count >= discountQuantity){
+                    setTotal(total-(count*(cost*((100-discountPercent)/100))))
+                }
+                else {
+                    setTotal(total-(cost*count))
+                }
                 var product = document.getElementById("item"+id)
                 product?.remove()
                 
@@ -68,7 +92,24 @@ export function cartItems({CartData, setTotal, total} : cartItemsProps){
                 tmptotal = tmptotal+productInfo.price
                 useEffect(()=>{
                     setTotal(tmptotal)
+                    if (productInfo.rebateQuantity != 0){
+                        document.getElementById("itemdiscount"+productInfo.id)!!.innerHTML = 'Buy ' + productInfo.rebateQuantity + ' or more to get ' + productInfo.rebatePercent + '% discount!'
+                        
+                    }
                 }, [tmptotal])
+
+                useEffect(()=> {
+                    if (count >= productInfo.rebateQuantity && productInfo.rebateQuantity != 0){
+                        document.getElementById("itemdiscount"+productInfo.id)!!.innerHTML = ""
+                        document.getElementById("items-discountcost"+productInfo.id)!!.innerHTML = "Discounted Cost: " +count*((productInfo.price)*(100-productInfo.rebatePercent)/100)
+
+                    }
+                    if (productInfo.rebateQuantity != 0 && count < productInfo.rebateQuantity) {
+                        document.getElementById("itemdiscount"+productInfo.id)!!.innerHTML = 'Buy ' + productInfo.rebateQuantity + ' or more to get ' + productInfo.rebatePercent + '% discount!'
+                        document.getElementById("items-discountcost"+productInfo.id)!!.innerHTML = ""
+                    }
+                }, [count])
+
             
             
 
@@ -78,33 +119,38 @@ export function cartItems({CartData, setTotal, total} : cartItemsProps){
                     <h2 className = "product-info" >
                     {'Name: ' + productInfo.name + ' ' + 'Price: ' + productInfo.price + " " + productInfo.currency + ' pr. styk '}
                     </h2>
+                    <div className = "item-discount" id = {"itemdiscount"+productInfo.id}>
                     
+                    </div>
                     <div className = "item-amount">
                         {"Amount: " + count}
                     </div>
-                    
                     <div className = "adjusters" >
-                        <button className = "decrement-button" onClick={() => decrement(productInfo.price,)} >
+                        <button className = "decrement-button" onClick={() => decrement(productInfo.price,productInfo.rebateQuantity, productInfo.rebatePercent)} >
                         -
                         </button>
-                        <button className = "increment-button"  onClick={() => increment(productInfo.price,)} >
+                        <button className = "increment-button"  onClick={() => increment(productInfo.price,productInfo.rebateQuantity, productInfo.rebatePercent)} >
                         +
                         </button>
             
                     </div>
                     
                     
-                    <button className = "delete-button" onClick={() => deleteitem(productInfo.id, productInfo.price, count)} >
+                    <button className = "delete-button" onClick={() => deleteitem(productInfo.id, productInfo.price, productInfo.rebateQuantity, productInfo.rebatePercent)} >
                     x
                     </button >
                     
                     <div className = "items-cost">
                     {"Cost: " + count*productInfo.price + " " + productInfo.currency} 
                     </div>
+                    <div className = "items-discountcost" id = {"items-discountcost"+productInfo.id}>
+                    
+                    </div>
                     
                 
                 </div>
                 )
+             
                 
             }
             
