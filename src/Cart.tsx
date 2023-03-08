@@ -12,7 +12,7 @@ export function createCart() {
         
     })
     
-    
+
     const [total, setTotal] = useState(initialcost)
 
     if (total != 0){
@@ -22,7 +22,7 @@ export function createCart() {
             {"Total Cart Cost: " + total + " DKK"}
         </div>
         <div className = "item-row" >
-            <CartItems.cartItems CartData={CartData} setTotal={setTotal} total={total} />
+            <CartItems.cartItems cartdata={CartData} setTotal={setTotal} total={total} />
         </div>
         </div>
     )
@@ -33,7 +33,7 @@ export function createCart() {
             {"Cart is empty"}
         </div>
         <div className = "item-row" >
-            <CartItems.cartItems CartData={CartData} setTotal={setTotal} total={total} />
+            <CartItems.cartItems cartdata={CartData} setTotal={setTotal} total={total} />
         </div>
         </div>
     )
