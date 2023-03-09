@@ -49,10 +49,28 @@ export function userinput() {
         const input = event.target.value;
         setCityInput(input);
     }
+    function validate(event : { target: { value: any; }; }) {
+        const input = event.target.value;
+        const email = document.getElementById("email");
+        const error = document.getElementById("error-message");
+        // check if input is valid email string, if not show error message
+        if (!input.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+            error.style.display = "block";
+            email.classList.add("error");
+
+        }
+        else {
+            error.style.display = "none";
+            email.classList.remove("error");
+        }
+
+}
+
+
 
 return (
         <div className = "user-input">
-            <h1> User Input </h1>
+            <h1> Your Information </h1>
             <form>
                 <label>
                     <h2>Country: </h2>
@@ -82,7 +100,8 @@ return (
                 </label>
                 <label>
                     <h2> Email: </h2>
-                    <input type="email" required name="email" />
+                    <input type="email" required name="email" id="email" onChange={validate}/>
+                    <span id="error-message">Please enter a valid email address</span>
                 </label> <br/>
                 <label>
                     <h2>Company name: </h2>

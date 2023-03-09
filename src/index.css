@@ -82,9 +82,15 @@ h2{
   top: 0;
 
 }
-input:invalid {
+input:invalid{
   border: 2px dashed red;
 }
+#error-message {
+  display: none;
+  color: red;
+}
+
+
 input:valid{
   border: 1px solid green;
 }
@@ -93,6 +99,7 @@ input:valid{
 input{
   width: 500px;
     height: 30px;
+  border : 1px solid black;
 }
 
 .adjusters{
