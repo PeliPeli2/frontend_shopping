@@ -1,5 +1,5 @@
 import * as Cart from './Cart'
-import {userinput} from "./UserForms"
+import * as UserForms from "./UserForms"
 
 
 
@@ -11,7 +11,11 @@ export default function App() {
       <div>
       <Cart.createCart  />
       </div>
-        {userinput()}
+      <div>
+      <UserForms.userinput />
+      </div>
+
+        
     </div>
   )
 }
