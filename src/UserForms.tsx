@@ -27,7 +27,7 @@ export function userinput() {
         return false;
     }
 
-    async function handleInputChange(event: { target: { value: any } }) {
+    async function handleInputChange(event: { target: { value: string } }) {
         const input = event.target.value;
         const zipToCityMap = await fetchnumbers();
         setUserInput(input)
@@ -45,7 +45,7 @@ export function userinput() {
         }
 
     }
-    function handleCityInputChange(event: { target: { value: any; }; }) {
+    function handleCityInputChange(event: { target: { value: string; }; }) {
         const input = event.target.value;
         setCityInput(input);
     }
