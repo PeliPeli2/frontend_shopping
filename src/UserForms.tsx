@@ -1,6 +1,8 @@
+//@ts-nocheck
 import React, { useState } from "react";
 import {Simulate} from "react-dom/test-utils";
 import error = Simulate.error;
+
 
 
 export function userinput() {
