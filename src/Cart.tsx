@@ -19,7 +19,7 @@ export function createCart() {
     return (
         <div className = "cart">
         <div className = "cart-total" id = "cart-cost">
-            {"Total Cart Cost: " + total + " DKK"}
+            {"Total Cost: " + total + " DKK"}
         </div>
         <div className = "item-row" >
             <CartItems.cartItems cartdata={CartData} setTotal={setTotal} total={total} />
@@ -30,7 +30,7 @@ export function createCart() {
     else return (
         <div className = "cart">
         <div className = "empty-cart" id = "empty-cart">
-            {"Cart is empty"}
+            {"The Cart is Empty"}
         </div>
         <div className = "item-row" >
             <CartItems.cartItems cartdata={CartData} setTotal={setTotal} total={total} />

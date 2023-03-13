@@ -111,11 +111,12 @@ export function cartItems({cartdata, setTotal, total} : CartItemsProps){
                         document.getElementById("items-discountcost"+productInfo.id)!!.innerHTML = ""
                     }
                 }, [count])
-
+                // TODO  product info string seperation should be made later 
             return (
                 <div key={"key"+productInfo.id} className = "item-card" id = {"item"+productInfo.id}>
+                    
                     <h2 className = "product-info" >
-                    {'Name: ' + productInfo.name + ' ' + 'Price: ' + productInfo.price + " " + productInfo.currency + ' pr. styk '}
+                    {productInfo.name + ' ' + 'Price: ' + productInfo.price + ' ' + productInfo.currency}
                     </h2>
                     <div className = "item-discount" id = {"itemdiscount"+productInfo.id}>
                     
@@ -124,7 +125,7 @@ export function cartItems({cartdata, setTotal, total} : CartItemsProps){
 
                     </div>
                     <div className = "item-amount">
-                        {"Amount: " + count}
+                        {"Quantity: " + count}
                     </div>
                     <div className = "adjusters" >
                         <button className = "decrement-button" onClick={() => decrement(productInfo.price,productInfo.rebateQuantity, productInfo.rebatePercent)} >
