@@ -1,40 +1,30 @@
 import React, {useState } from "react"
 import CartData from './data.json'
 import * as CartItems from './CartItems'
+import { useCartTotalContext } from "./context/CartContext"
 
 export function createCart() {
 
-    var initialCount = 0
-    
-    var initialcost = 0
-    CartData.map((data: { price: number }) => {
-        initialcost = initialcost + data.price * initialCount
-        
-    })
-    
-
-    const [total, setTotal] = useState(initialcost)
-
-    if (total != 0){
+    const cartTotalContext = useCartTotalContext();
     return (
         <div className = "cart">
-        <div className = "cart-total" id = "cart-cost">
-            {"Total Cost: " + total + " DKK"}
-        </div>
-        <div className = "item-row" >
-            <CartItems.cartItems cartdata={CartData} setTotal={setTotal} total={total} />
-        </div>
-        </div>
-    )
-    }
-    else return (
-        <div className = "cart">
-        <div className = "empty-cart" id = "empty-cart">
-            {"The Cart is Empty"}
-        </div>
-        <div className = "item-row" >
-            <CartItems.cartItems cartdata={CartData} setTotal={setTotal} total={total} />
-        </div>
+            <div className = "cart-total" id = "cart-cost">
+                {isBasketEmpty(cartTotalContext.total)}
+            </div>
+            <div className = "item-row" >
+                <CartItems.cartItems cartdata={CartData} />
+            </div>
         </div>
     )
+
 }
+
+function isBasketEmpty(total : number){
+    if (total == 0){
+        return "Basket is empty"
+    }
+    else {
+        return "Total Cost: " + total + " DKK"
+    }
+}
+

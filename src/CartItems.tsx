@@ -1,4 +1,5 @@
 import React, {useEffect, useState } from "react"
+import { useCartTotalContext } from "./context/CartContext"
 
 interface CartItemsProps {cartdata: ({
     id: string;
@@ -7,20 +8,12 @@ interface CartItemsProps {cartdata: ({
     currency: string;
     rebateQuantity: number;
     rebatePercent: number;
-    upsellProductId: null;
-} | {
-    id: string;
-    name: string;
-    price: number;
-    currency: string;
-    rebateQuantity: number;
-    rebatePercent: number;
-    upsellProductId: string;
-})[], 
-setTotal : (total : number) => void,
-total : number}
+    upsellProductId: null |string;
+})[]}
 
-export function cartItems({cartdata, setTotal, total} : CartItemsProps){
+export function cartItems({cartdata} : CartItemsProps){
+
+    const cartTotalContext = useCartTotalContext();
 
     var tmptotal = 0
 
@@ -38,14 +31,14 @@ export function cartItems({cartdata, setTotal, total} : CartItemsProps){
                 setCount(count+1);
                 if (count+1 == discountQuantity){
                     // removing discount for each count from total & increasing total by discounted price of next item
-                    setTotal(total+cost*(((100-discountPercent)/100))-(count*(cost*(discountPercent/100))))
+                    cartTotalContext.setTotal(cartTotalContext.total+cost*(((100-discountPercent)/100))-(count*(cost*(discountPercent/100))))
                 }
                 else if (count+1 > discountQuantity){
                     //increasing total by discounted price
-                    setTotal(total+cost*(((100-discountPercent)/100)))
+                    cartTotalContext.setTotal(cartTotalContext.total+cost*(((100-discountPercent)/100)))
                 }
                 else {
-                    setTotal(total+cost)
+                    cartTotalContext.setTotal(cartTotalContext.total+cost)
                 }
 
             }
@@ -55,14 +48,14 @@ export function cartItems({cartdata, setTotal, total} : CartItemsProps){
                     setCount(count-1);
                     if (count == discountQuantity){
                         //adding back the prediscount price to total for the remaining items
-                        setTotal(total-cost*(((100-discountPercent)/100))+((count-1)*(cost*(discountPercent/100))))
+                        cartTotalContext.setTotal(cartTotalContext.total-cost*(((100-discountPercent)/100))+((count-1)*(cost*(discountPercent/100))))
                     }
                     else if (count > discountQuantity){
                         //removing discounted price from total
-                        setTotal(total-cost*(((100-discountPercent)/100)))
+                        cartTotalContext.setTotal(cartTotalContext.total-cost*(((100-discountPercent)/100)))
                     }
                     else {
-                        setTotal(total-cost)
+                        cartTotalContext.setTotal(cartTotalContext.total-cost)
                     }
 
                 }
@@ -70,10 +63,10 @@ export function cartItems({cartdata, setTotal, total} : CartItemsProps){
 
             function deleteitem(id : string, cost : number, discountQuantity : number, discountPercent : number) {
                 if (count >= discountQuantity){
-                    setTotal(total-(count*(cost*((100-discountPercent)/100))))
+                    cartTotalContext.setTotal(cartTotalContext.total-(count*(cost*((100-discountPercent)/100))))
                 }
                 else {
-                    setTotal(total-(cost*count))
+                    cartTotalContext.setTotal(cartTotalContext.total-(cost*count))
                 }
                 var product = document.getElementById("item"+id)
                 product?.remove()
@@ -87,7 +80,7 @@ export function cartItems({cartdata, setTotal, total} : CartItemsProps){
                 //initially calculate total (all items start with a count of 1) & setup initial discount nudges
                 tmptotal = tmptotal+productInfo.price
                 useEffect(()=>{
-                    setTotal(tmptotal)
+                    cartTotalContext.setTotal(tmptotal)
                     if (productInfo.rebateQuantity != 0){
                         document.getElementById("itemdiscount"+productInfo.id)!!.innerHTML = 'Buy ' + productInfo.rebateQuantity + ' or more to get ' + productInfo.rebatePercent + '% discount!'
                         

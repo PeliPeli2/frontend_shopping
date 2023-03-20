@@ -1,5 +1,6 @@
 import React from "react";
 import { createContext, useState } from "react";
+import { cartItems } from "../CartItems";
 
 type CartTotal = {
     total: number;
@@ -15,6 +16,7 @@ type Props = {
 
 export const CartTotalContextProvider = ({children}: Props) => {
     const [total, setTotal] = React.useState(0);
+    const cartitems = ""
 
     return<CartTotalContext.Provider value={{total, setTotal}}>{children}</CartTotalContext.Provider>
 };
@@ -27,30 +29,3 @@ export const useCartTotalContext = () => {
     return cartTotalContext
     
 }
-
-/*
-import * as Cart from './Cart'
-import * as UserForms from "./UserForms"
-import { CartTotalContextProvider } from './CartContext'
-
-export default function App() {
-  return (
-    <CartTotalContextProvider>
-      <div className = "app">
-        <h1>Shopping Cart</h1>
-        <div>
-        <Cart.createCart  />
-        </div>
-        <div>
-        <UserForms.userinput />
-        </div>
-      </div>
-    </CartTotalContextProvider>
-  )
-}
-
-
-
-
-
-*/
