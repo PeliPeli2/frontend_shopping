@@ -1,5 +1,5 @@
 import {Cart} from './components/Cart'
-import { UserForm } from './components/UserForms'
+import { UserForms } from './components/UserForms'
 import { useEffect, useState } from 'react';
 import { CartContextProvider } from './context/CartContext';
 export default function App() {
@@ -30,7 +30,7 @@ export default function App() {
         </div>
         {    
         <div>
-        <UserForm/>
+        <UserForms/>
         </div>
     }
       </div>

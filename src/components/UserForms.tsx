@@ -1,13 +1,20 @@
-//@ts-nocheck
 import React, { useState } from "react";
 import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
+
+export function UserForms() {
+    const [zipInput, setZipInput] = useState("");
+    const [cityInput, setCityInput] = useState("");
+    const [phoneError, setPhoneError] = useState(false);
+    const [zipError, setZipError] = useState(false);
+    const [emailError, setEmailError] = useState(false);
+    const [nameError, setNameError] = useState(false);
+    const [addressError, setAddressError] = useState(false);
+    const [cityError, setCityError] = useState(false);
 
 
 
-export function UserForm() {
 
-    async function fetchnumbers() {
+    async function fetchZipCodes() {
         const response = await fetch("https://api.dataforsyningen.dk/postnumre");
         const data = await response.json();
         // create a map of zip codes to city names
@@ -18,63 +25,69 @@ export function UserForm() {
         return zipToCityMap;
     }
 
-    const [userInput, setUserInput] = useState("");
-    const [cityInput, setCityInput] = useState("");
 
-    async function isValidInput({userInput, zipToCityMap,}: {
-        userInput: string;
+    async function isValidInput({zipInput, zipToCityMap,}: {
+        zipInput: string;
         zipToCityMap: Map<string, string>;
     }) {
-        if (zipToCityMap.has(userInput)) {
+        if (zipToCityMap.has(zipInput)) {
             return true;
         }
         return false;
     }
 
-    async function handleInputChange(event: { target: { value: string } }) {
+    async function zipValidation(event: { target: { value: string } }) {
         const input = event.target.value;
-        const error = document.getElementById("error");
-        const zipToCityMap = await fetchnumbers();
-        setUserInput(input)
-        if (await isValidInput({ userInput: input, zipToCityMap }) || (input == "")) {
-            const city = zipToCityMap.get(input);
+        const zipToCityMap = await fetchZipCodes();
+        setZipInput(input)
+        if (await isValidInput({ zipInput: input, zipToCityMap }) || (input == "")) {
+            const city = zipToCityMap.get(input) as string;
             setCityInput(city);
-            error.style.display = "none";
+            setCityError(false)
+            setZipError(false);
         }
         else {
-            // display error message
-            error.style.display = "block";
+            setZipError(true);
             if (cityInput == "")
-            setCityInput("")
+                setCityInput("")
         }}
 
-    function handleCityInputChange(event: { target: { value: string; }; }) {
+    function cityName(event: { target: { value: string; }; }) {
         const input = event.target.value;
-        setCityInput(input);
-    }
-        function phonevalidation(){
-            const phone = document.getElementById("phone");
-            const error = document.getElementById("error1");
-            const phoneRegex = new RegExp("^[0-9]{8}$");
-            if (phoneRegex.test(phone.value) || (phone.value == "")){
-                error.style.display = "none";
+        if (zipError == true || zipInput == "") {
+            setCityInput(input)
+            if (input == "" ) {
+                setCityError(true)
             }
             else {
-                error.style.display = "block";
+                setCityError(false)
             }
         }
-        function emailvalidation(){
-            const email = document.getElementById("email");
-            const error = document.getElementById("error2");
-            const emailRegex = new RegExp("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$");
-            email.addEventListener('input', emailvalidation);{
-                if (emailRegex.test(email.value) || (email.value == "")){
-                    error.style.display = "none";
-                }
-                else {
-                    error.style.display = "block";
-                }
-            }}
+    }
+
+
+    function phoneValidation(event: { target: { checkValidity: () => boolean; }; }) {
+        if (event.target.checkValidity()==true) {
+            setPhoneError(false)
+            return true;
+        }
+        else {
+            setPhoneError(true);
+            return false;
+        }}
+
+
+    function emailValidation(event: { target: { checkValidity: () => boolean; }; }){
+        if (event.target.checkValidity()==true) {
+            setEmailError(false)
+            return true;
+        }
+        else {
+            setEmailError(true);
+            return false
+        }}
+
+
 
 
 
@@ -90,16 +103,18 @@ export function UserForm() {
                 </label>
                 <label>
                     <h2>Zip Code: </h2>
-                    <input type="text" value={userInput} autoFocus={true} onChange={handleInputChange}
+                    <input type="text" value={zipInput} autoFocus={true} onChange={zipValidation}
                            required pattern="[0-9]{4}" name="zip" id="zip"/>
-                    <div id={"error"}> { "Invalid zip code"} </div>
+                    {zipError && <div className={"error"}> Invalid zip code </div>}
 
 
 
                 </label>
                 <label>
                     <h2>City: </h2>
-                    <input type="text" value={cityInput} onChange={handleCityInputChange}  required name="city" />
+                    <input type="text" value={cityInput} onChange={cityName}  required name="city" />
+                    {cityError && <div className={"error"}> City required </div>}
+
                 </label>
                 <label>
                     <h2>Address: </h2>
@@ -111,13 +126,15 @@ export function UserForm() {
                 </label> <br/>
                 <label>
                     <h2>Phone Number: </h2>
-                    <input type="tel" required pattern="[0-9]{8}" name="phone" id="phone" onChange={phonevalidation} />
-                    <div id={"error1"}> { "Invalid phone number"} </div>
+                    <input type="tel" required pattern="[0-9]{8}" name="phone" id="phone" onChange={phoneValidation} />
+                    {phoneError && <div className={"error"}> Invalid phone number </div>}
+
                 </label>
                 <label>
                     <h2> Email: </h2>
-                    <input type="email" required name="email" id="email" onChange={emailvalidation} />
-                    <div id={"error2"}> { "Invalid email"} </div>
+                    <input type="email" required name="email" id="email" onChange={emailValidation} />
+                    {emailError && <div className={"error"}> Invalid Email </div>}
+
                 </label>
                 <label>
                     <h2>Company name: </h2>
