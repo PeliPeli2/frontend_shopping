@@ -1,0 +1,46 @@
+* {
+    outline: 1px solid red;
+    
+  }
+li {
+    min-width: min-content ;
+    max-width: 50vW;
+}
+
+
+.cart-container{
+    height: 100px;
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    background: linear-gradient(to bottom right, rgb(43, 200, 132), #73a580);
+   }
+.image-box{
+    width: 100px;
+    height: 100px
+}
+   
+
+li img {
+    height: 100%;
+
+}
+
+.cartitem-name{
+    padding-top: 5px;
+    font-size: calc(1rem + 0.8vw);
+}
+
+
+
+  .adjusters{
+
+  }
+  .delete-button {
+
+  }
+  .upsell-button{
+
+  }

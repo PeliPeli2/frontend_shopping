@@ -5,7 +5,7 @@ import error = Simulate.error;
 
 
 
-export function userinput() {
+export function UserForm() {
 
     async function fetchnumbers() {
         const response = await fetch("https://api.dataforsyningen.dk/postnumre");

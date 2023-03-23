@@ -1,20 +1,44 @@
-import * as Cart from './Cart'
-import * as UserForms from "./UserForms"
-import { CartTotalContextProvider } from './context/CartContext'
-
+import {Cart} from './components/Cart'
+import { UserForm } from './components/UserForms'
+import { useEffect, useState } from 'react';
+import { CartContextProvider } from './context/CartContext';
 export default function App() {
-  return (
-    <CartTotalContextProvider>
+
+  const [cartdata, setCartData] = useState();
+
+  useEffect(() => {
+      // fetch data
+      const dataFetch = async () => {
+          const data = await (
+              await fetch("https://raw.githubusercontent.com/larsthorup/checkout-data/main/product-v2.json")
+          ).json();
+  
+        // set state when the data received
+          setCartData(data);
+      };  
+  
+      dataFetch();
+  }, []);
+
+  if (cartdata){
+      return (
+    <CartContextProvider>
       <div className = "app">
         <h1>Shopping Cart</h1>
         <div>
-        <Cart.createCart />
+        <Cart cartData={cartdata}/>
         </div>
+        {    
         <div>
-        <UserForms.userinput />
+        <UserForm/>
         </div>
+    }
       </div>
-    </CartTotalContextProvider>
-  )
+    </CartContextProvider>
+      )
+  }
+  else {
+      return <div>No Cart Data Found</div>
+  }
 }
 

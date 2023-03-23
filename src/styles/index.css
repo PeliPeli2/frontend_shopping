@@ -13,6 +13,19 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+* {
+  outline: 1px solid red;
+}
+ul {
+  list-style: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+}
+li {
+  
+}
 
 
 .a {
