@@ -68,7 +68,7 @@ export function CartItem({item, cartData}: Props){
         </div>
         <div className ="cartitem-info">
             <h1>
-            {item.name.split(",")[0]}
+            {item.name.split(", ")[0]}
             </h1>
             <h2>
                 some info

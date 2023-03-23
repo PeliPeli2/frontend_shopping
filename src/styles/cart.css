@@ -43,7 +43,7 @@ li img {
     justify-content:center;
     margin-block-start: 0;
     margin-block-end: 0.5vw;
-    font-size: calc(1rem + 0.8vw);
+    font-size: calc(1rem + 0.5vw);
 }
 .cartitem-info h2{
     display: flex;
