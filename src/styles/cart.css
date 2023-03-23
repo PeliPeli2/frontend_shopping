@@ -72,6 +72,7 @@ li img {
     justify-content: center;
     margin-top: 5px;
     margin-bottom: 0px;
+    font-weight: bold;
 }
 
 .item-cost{
@@ -80,6 +81,7 @@ li img {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    font-weight: bold;
 }
 .upsell-button {
     width: 120px;
