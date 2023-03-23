@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import '../styles/userforms.css'
 import {Simulate} from "react-dom/test-utils";
 
 export function UserForms() {
@@ -15,13 +16,23 @@ export function UserForms() {
 
 
     async function fetchZipCodes() {
-        const response = await fetch("https://api.dataforsyningen.dk/postnumre");
-        const data = await response.json();
-        // create a map of zip codes to city names
-        let zipToCityMap = new Map<string, string>();
-        for (let i = 0; i < data.length; i++) {
-            zipToCityMap.set(data[i]["nr"], data[i]["navn"]);
+        let zipToCityMap;
+
+        const cachedData = localStorage.getItem("zipCodes");
+        if (cachedData) {
+            zipToCityMap = new Map(JSON.parse(cachedData));
+        } else {
+            const response = await fetch("https://api.dataforsyningen.dk/postnumre");
+            const data = await response.json();
+
+            zipToCityMap = new Map();
+            for (let i = 0; i < data.length; i++) {
+                zipToCityMap.set(data[i]["nr"], data[i]["navn"]);
+            }
+
+            localStorage.setItem("zipCodes", JSON.stringify([...zipToCityMap]));
         }
+
         return zipToCityMap;
     }
 
@@ -66,14 +77,13 @@ export function UserForms() {
     }
 
 
+
     function phoneValidation(event: { target: { checkValidity: () => boolean; }; }) {
         if (event.target.checkValidity()==true) {
             setPhoneError(false)
-            return true;
         }
         else {
             setPhoneError(true);
-            return false;
         }}
 
 
@@ -86,6 +96,11 @@ export function UserForms() {
             setEmailError(true);
             return false
         }}
+
+    function allValidation(e : React.MouseEvent<HTMLButtonElement, MouseEvent>){
+
+
+    }
 
 
 
