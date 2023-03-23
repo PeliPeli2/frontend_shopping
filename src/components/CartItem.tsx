@@ -74,7 +74,7 @@ export function CartItem({item, cartData}: Props){
                 some info
             </h2>
             <h3>
-                some more info
+                {itemNudge}
             </h3>
         </div>
         <div className = "upsell" >
@@ -91,7 +91,6 @@ export function CartItem({item, cartData}: Props){
             <button className = "increment-button"  onClick={() => {
                 incrementQuantity(item.id,)
                 calculateCost(item.id, item.price, item.rebatePercent, item.rebateQuantity)}}>
-                {itemNudge}
                 increment
             </button>
             <p>
@@ -133,7 +132,7 @@ export function CartItem({item, cartData}: Props){
                     some info
                 </h2>
                 <h3>
-                    some more info
+                    {upSellItemNudge}
                 </h3>
             </div>
             <div className = "upsell-padding"></div>
@@ -141,7 +140,6 @@ export function CartItem({item, cartData}: Props){
                 <button className = "increment-button"  onClick={() => {
                     incrementQuantity(upSellItem.id,)
                     calculateCost(upSellItem.id, upSellItem.price, upSellItem.rebatePercent, upSellItem.rebateQuantity)}}>
-                    {upSellItemNudge}
                     increment
                 </button>
                 <p>
