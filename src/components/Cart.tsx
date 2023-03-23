@@ -18,7 +18,6 @@ export function Cart({cartData}: CartItemsProps){
     const {calculateTotal, formatTotal} = useCartContext()
 
     const total = calculateTotal()
-    
 
     return (
         <ul>

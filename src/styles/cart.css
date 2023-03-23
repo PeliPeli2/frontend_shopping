@@ -3,6 +3,7 @@
     
   }
 li {
+
     min-width: min-content ;
     max-width: 50vW;
 }
@@ -14,7 +15,7 @@ li {
     padding-left: 5px;
     padding-bottom: 5px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
     background: linear-gradient(to bottom right, rgb(43, 200, 132), #73a580);
    }
 .image-box{
@@ -27,20 +28,157 @@ li img {
     height: 100%;
 
 }
-
-.cartitem-name{
-    padding-top: 5px;
+.cartitem-info{
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    
+}
+.cartitem-info h1{
+    display: flex;
+    justify-content:center;
+    margin-block-start: 0;
+    margin-block-end: 0.5vw;
     font-size: calc(1rem + 0.8vw);
 }
+.cartitem-info h2{
+    display: flex;
+    justify-content:center;
+    margin-block-start: 0;
+    margin-block-end: 0.5vw;
+    font-size: calc(0.5rem + 0.4vw);
+}
+.cartitem-info h3{
+    display: flex;
+    justify-content:center;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    font-size: calc(0.5rem + 0.4vw);
+}
+.upsell-padding{
+    width: 120px;
+}
 
+.upsell{
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-block-start: 0;
+}
+.adjusters p{
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
 
+.item-cost{
+    width: 100px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.upsell-button {
+	box-shadow: 0px 0px 0px 2px #9fb4f2;
+	background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
+	background-color:#7892c2;
+	border-radius:10px;
+	border:1px solid #4e6096;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-size:16px;
+	padding:4px 2px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #283966;
+}
+.upsell-button:hover {
+	background:linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+	background-color:#476e9e;
+}
+.upsell-button:active {
+	position:relative;
+	top:1px;
+}
+.increment-button {
+    width: 100px;
+    margin-top: 12px;
+	box-shadow: 0px 0px 0px 2px #9fb4f2;
+	background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
+	background-color:#7892c2;
+	border-radius:10px;
+	border:1px solid #4e6096;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-size:16px;
+	padding:2px 8px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #283966;
+}
+.increment-button:hover {
+	background:linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+	background-color:#476e9e;
+}
+.increment-button:active {
+	position:relative;
+	top:1px;
+}
 
-  .adjusters{
-
-  }
-  .delete-button {
-
-  }
-  .upsell-button{
-
-  }
+.decrement-button {
+    margin-top: 5px;
+    width: 100px;
+	box-shadow: 0px 0px 0px 2px #9fb4f2;
+	background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
+	background-color:#7892c2;
+	border-radius:10px;
+	border:1px solid #4e6096;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-size:16px;
+	padding:2px 8px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #283966;
+    margin-bottom: 10px;
+}
+.decrement-button:hover {
+	background:linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+	background-color:#476e9e;
+}
+.decrement-button:active {
+	position:relative;
+	top:1px;
+}
+.delete{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-block-start: 0;
+}
+.delete-button {
+    width: 80px;
+	box-shadow: 0px 0px 0px 2px #f29f9f;
+	background:linear-gradient(to bottom, #c27878 5%, #9e4747 100%);
+	background-color:#c27878;
+	border-radius:10px;
+	border:1px solid #964e4e;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-size:16px;
+	padding:2px 8px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #662828;
+}
+.delete-button:hover {
+	background:linear-gradient(to bottom, #9e4747 5%, #c27878 100%);
+	background-color:#c27878;
+}
+.delete-button:active {
+	position:relative;
+	top:1px;
+}

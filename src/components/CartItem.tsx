@@ -66,18 +66,25 @@ export function CartItem({item, cartData}: Props){
             </img>
 
         </div>
-        <h1 className = "cartitem-name">
+        <div className ="cartitem-info">
+            <h1>
             {item.name.split(",")[0]}
-        </h1>
-        
-        <div>
+            </h1>
+            <h2>
+                some info
+            </h2>
+            <h3>
+                some more info
+            </h3>
+        </div>
+        <div className = "upsell" >
         <button className = "upsell-button" onClick={() => {
             upsellItem(item.id, item.upsellProductId)
             calculateCost(upSellItem.id, upSellItem.price, upSellItem.rebatePercent, upSellItem.rebateQuantity)
             setUpSell(!upSell)
 
             }}>
-            upsell
+            Upgrade Item
         </button>
         </div>
         <div className = "adjusters">
@@ -96,9 +103,10 @@ export function CartItem({item, cartData}: Props){
                 decrement
             </button>
         </div>
-        <div>
-            {itemCost}
+        <div className = "item-cost">
+            {itemCost + " DKK"}
         </div>
+        <div className ="delete">
         <button className = "delete-button" onClick={() => {
             setShow(false)
             removeItem(item.id)
@@ -106,21 +114,29 @@ export function CartItem({item, cartData}: Props){
             remove 
         </button>
         </div>
+        </div>
     )
         if(show && upSell && upSellItem)
         return (
+        
             <div className ="cart-container">
             <div className="image-box">
                 <img src={upSellItem.imageUrl}>
                 </img>
     
             </div>
-            <h1 className = "cartitem-name">
+            <div className ="cartitem-info">
+                <h1>
                 {upSellItem.name.split(",")[0]}
-            </h1>
-            
-            <div>
+                </h1>
+                <h2>
+                    some info
+                </h2>
+                <h3>
+                    some more info
+                </h3>
             </div>
+            <div className = "upsell-padding"></div>
             <div className = "adjusters">
                 <button className = "increment-button"  onClick={() => {
                     incrementQuantity(upSellItem.id,)
@@ -129,7 +145,7 @@ export function CartItem({item, cartData}: Props){
                     increment
                 </button>
                 <p>
-                {itemQuantity}
+                {upSellItemQuantity}
                 </p>
                 <button className = "decrement-button" onClick={() => {
                     decrementQuantity(upSellItem.id)
@@ -137,15 +153,17 @@ export function CartItem({item, cartData}: Props){
                     decrement
                 </button>
             </div>
-            <div>
-                {upSellItemCost}
+            <div className = "item-cost">
+                {upSellItemCost + " DKK"}
             </div>
+            <div className ="delete">
             <button className = "delete-button" onClick={() => {
                 setShow(false)
                 removeItem(upSellItem.id)
                 }}>
                 remove 
             </button>
+            </div>
             </div>
         )
     else return <div></div>
