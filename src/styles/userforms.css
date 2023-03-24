@@ -1,3 +1,9 @@
 .error {
-    color: red;
+    color: red
+}
+input:required:valid {
+    border: 2px solid green
+}
+input.required:invalid {
+    border: 2px solid red
 }

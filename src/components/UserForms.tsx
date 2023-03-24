@@ -11,28 +11,20 @@ export function UserForms() {
     const [nameError, setNameError] = useState(false);
     const [addressError, setAddressError] = useState(false);
     const [cityError, setCityError] = useState(false);
+    const [termsError, setTermsError] = useState(false);
+
 
 
 
 
     async function fetchZipCodes() {
-        let zipToCityMap;
-
-        const cachedData = localStorage.getItem("zipCodes");
-        if (cachedData) {
-            zipToCityMap = new Map(JSON.parse(cachedData));
-        } else {
-            const response = await fetch("https://api.dataforsyningen.dk/postnumre");
-            const data = await response.json();
-
-            zipToCityMap = new Map();
-            for (let i = 0; i < data.length; i++) {
-                zipToCityMap.set(data[i]["nr"], data[i]["navn"]);
-            }
-
-            localStorage.setItem("zipCodes", JSON.stringify([...zipToCityMap]));
+        const response = await fetch("https://api.dataforsyningen.dk/postnumre");
+        const data = await response.json();
+        // create a map of zip codes to city names
+        let zipToCityMap = new Map<string, string>();
+        for (let i = 0; i < data.length; i++) {
+            zipToCityMap.set(data[i]["nr"], data[i]["navn"]);
         }
-
         return zipToCityMap;
     }
 
@@ -96,10 +88,40 @@ export function UserForms() {
             setEmailError(true);
             return false
         }}
+    // function that checks if zip, phone and email is valid, and if the rest are filled out
+    function checkForm(event: { preventDefault: () => void; }) {
+        event.preventDefault();
+        const phone = document.getElementById('phone') as HTMLInputElement
+        const email = document.getElementById('email') as HTMLInputElement
+        const zip = document.getElementById('zip') as HTMLInputElement
+    // check if the rest of the fields are filled out
+        const name = document.getElementById('name') as HTMLInputElement
+        const address = document.getElementById('address') as HTMLInputElement
+        const city = document.getElementById('city') as HTMLInputElement
+        const terms = document.getElementById('terms') as HTMLInputElement
 
-    function allValidation(e : React.MouseEvent<HTMLButtonElement, MouseEvent>){
+        if (phone.checkValidity() == false) {
+            setPhoneError(true)
+        }
+        if (email.checkValidity() == false) {
+            setEmailError(true)
+        }
+        if (zip.checkValidity() == false) {
+            setZipError(true)
+        }
+        if (name.value == ""){
+            setNameError(true)
+        }
+        if (address.value === "") {
+            setAddressError(true)
+        }
 
-
+        if (city.value === "") {
+            setCityError(true)
+        }
+        if(terms.checked == false) {
+            setTermsError(true)
+        }
     }
 
 
@@ -108,8 +130,13 @@ export function UserForms() {
 
 
 
+
+
+
+
+
     return (
-        <div className = "user-input">
+        <div className = "user-form">
             <h1> Your Information </h1>
             <form>
                 <label>
@@ -127,17 +154,19 @@ export function UserForms() {
                 </label>
                 <label>
                     <h2>City: </h2>
-                    <input type="text" value={cityInput} onChange={cityName}  required name="city" />
+                    <input type="text" id="city" value={cityInput} onChange={cityName}  required name="city" />
                     {cityError && <div className={"error"}> City required </div>}
 
                 </label>
                 <label>
                     <h2>Address: </h2>
-                    <input type="text" required name="address" />
+                    <input type="text" id="address" required name="address" />
+                    {addressError && <div className={"error"}> Address required </div>}
                 </label>
                 <label>
                     <h2>Name: </h2>
-                    <input type="text" required name="name" />
+                    <input type="text" id="name" required name="name" />
+                    {nameError && <div className={"error"}> Name required </div>}
                 </label> <br/>
                 <label>
                     <h2>Phone Number: </h2>
@@ -159,7 +188,14 @@ export function UserForms() {
                     <h2>Company CVR: </h2>
                     <input type="text" name="cvr" pattern="{8}" />
                 </label> <br/>
-                <button>Go to payment</button>
+                <input type="checkbox" id="terms" name="terms" required/>
+                    I accept the terms and conditions.
+                {termsError && <div className={"error"}> You must accept the terms and conditions </div>}
+                <br/>
+                <input type="checkbox" name="marketing" />
+                    I want to receive marketing emails.
+                <br/>
+                <button onClick={checkForm}>Go to payment</button>
             </form>
 
         </div>
