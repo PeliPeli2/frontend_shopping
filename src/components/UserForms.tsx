@@ -3,16 +3,28 @@ import '../styles/userforms.css'
 import {Simulate} from "react-dom/test-utils";
 
 export function UserForms() {
-    const [zipInput, setZipInput] = useState("");
-    const [cityInput, setCityInput] = useState("");
-    const [phoneError, setPhoneError] = useState(false);
-    const [zipError, setZipError] = useState(false);
-    const [emailError, setEmailError] = useState(false);
-    const [nameError, setNameError] = useState(false);
-    const [addressError, setAddressError] = useState(false);
-    const [cityError, setCityError] = useState(false);
-    const [termsError, setTermsError] = useState(false);
 
+    const [zipInput, setZipInput] = useState("");
+    const [zipError, setZipError] = useState(true);
+
+    const [cityInput, setCityInput] = useState("");
+    const [cityError, setCityError] = useState(true);
+
+    const [phoneInput, setPhoneInput] = useState("");
+    const [phoneError, setPhoneError] = useState(true);
+
+    const [emailInput, setEmailInput] = useState("");
+    const [emailError, setEmailError] = useState(true);
+
+    const [nameInput, setNameInput] = useState("");
+    const [nameError, setNameError] = useState(true);
+
+    const [adressInput, setadressInput] = useState("");
+    const [addressError, setAddressError] = useState(true);
+
+    const [termsError, setTermsError] = useState(true);
+
+    const [detailsInput, setDetailsInput] = useState("");
 
 
 
@@ -122,9 +134,31 @@ export function UserForms() {
         if(terms.checked == false) {
             setTermsError(true)
         }
+        if(!zipError && !cityError && !nameError && !phoneError && !termsError && !emailError && !addressError) {
+            submitCart()
+        }
     }
 
+    async function submitCart(){
 
+        const requestHeaders: HeadersInit = new Headers();
+        requestHeaders.set('Content-Type', 'application/json');
+
+        const responseLogin = await fetch('https://eoqqodxrlkk1wwk.m.pipedream.net', {
+        method: 'POST',
+        headers: requestHeaders,
+        body: JSON.stringify(zipInput)
+        })
+             .then((response) => response)
+             .then((data) => {
+                console.log(data);
+                // Handle data
+             })
+             .catch((err) => {
+                
+                console.log(err.message);
+             });
+    }
 
 
 
