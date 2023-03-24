@@ -1,33 +1,43 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
+import { useCartContext } from "../context/CartContext";
 import '../styles/userforms.css'
-import {Simulate} from "react-dom/test-utils";
+export function UserForms(){
 
-export function UserForms() {
+    const {cartItems, calculateTotal} = useCartContext()
+
+
+    const zipToCityMap = fetchZipCodes();
 
     const [zipInput, setZipInput] = useState("");
-    const [zipError, setZipError] = useState(true);
+    const [zipError, setZipError] = useState(false);
 
     const [cityInput, setCityInput] = useState("");
-    const [cityError, setCityError] = useState(true);
+    const [cityError, setCityError] = useState(false);
 
-    const [phoneInput, setPhoneInput] = useState("");
-    const [phoneError, setPhoneError] = useState(true);
+    const [addressInput, setAddressInput] = useState("");
+    const [addressError, setAddressError] = useState(false);
 
-    const [emailInput, setEmailInput] = useState("");
-    const [emailError, setEmailError] = useState(true);
+    const [billingInput, setBillingInput] = useState("");
 
     const [nameInput, setNameInput] = useState("");
-    const [nameError, setNameError] = useState(true);
+    const [nameError, setNameError] = useState(false);
 
-    const [adressInput, setadressInput] = useState("");
-    const [addressError, setAddressError] = useState(true);
+    const [phoneInput, setPhoneInput] = useState("");
+    const [phoneError, setPhoneError] = useState(false);
 
-    const [termsError, setTermsError] = useState(true);
+    const [emailInput, setEmailInput] = useState("");
+    const [emailError, setEmailError] = useState(false);
+
+    const [companyInput, setCompanyInput] = useState("");
+
+    const [cvrInput, setCvrInput] = useState("");
 
     const [detailsInput, setDetailsInput] = useState("");
 
+    const [termsInput, setTermsInput] = useState(false);
+    const [termsError, setTermsError] = useState(false);
 
-
+    const [marketingInput, setMarketingInput] = useState(false);
 
     async function fetchZipCodes() {
         const response = await fetch("https://api.dataforsyningen.dk/postnumre");
@@ -40,23 +50,11 @@ export function UserForms() {
         return zipToCityMap;
     }
 
-
-    async function isValidInput({zipInput, zipToCityMap,}: {
-        zipInput: string;
-        zipToCityMap: Map<string, string>;
-    }) {
-        if (zipToCityMap.has(zipInput)) {
-            return true;
-        }
-        return false;
-    }
-
-    async function zipValidation(event: { target: { value: string } }) {
-        const input = event.target.value;
-        const zipToCityMap = await fetchZipCodes();
+    async function zipValidation(event: React.FormEvent<HTMLInputElement>) {
+        const input = event.currentTarget.value;
         setZipInput(input)
-        if (await isValidInput({ zipInput: input, zipToCityMap }) || (input == "")) {
-            const city = zipToCityMap.get(input) as string;
+        if (await isValidZip(input) || (input == "")) {
+            const city = (await zipToCityMap).get(input) as string;
             setCityInput(city);
             setCityError(false)
             setZipError(false);
@@ -65,174 +63,187 @@ export function UserForms() {
             setZipError(true);
             if (cityInput == "")
                 setCityInput("")
-        }}
+    }}
 
-    function cityName(event: { target: { value: string; }; }) {
-        const input = event.target.value;
-        if (zipError == true || zipInput == "") {
-            setCityInput(input)
-            if (input == "" ) {
-                setCityError(true)
-            }
-            else {
-                setCityError(false)
-            }
+    async function isValidZip(zip: string) {
+        
+        if ((await zipToCityMap).has(zip)) {
+            return true;
         }
+        return false;
+    }
+    
+
+    function validateAddress(){
+        if (addressInput == ""){
+            setAddressError(true)
+        }
+        else {setAddressError(false)}
     }
 
-
-
-    function phoneValidation(event: { target: { checkValidity: () => boolean; }; }) {
-        if (event.target.checkValidity()==true) {
+    function validateName(){
+        if (nameInput == ""){
+            setNameError(true)
+        }
+        else {setNameError(false)}
+    }
+    function phoneValidation(event: React.FormEvent<HTMLInputElement>) {
+        const input = event.currentTarget.value;
+        setPhoneInput(input)
+        if (event.currentTarget.checkValidity()==true) {
             setPhoneError(false)
         }
         else {
             setPhoneError(true);
-        }}
-
-
-    function emailValidation(event: { target: { checkValidity: () => boolean; }; }){
-        if (event.target.checkValidity()==true) {
+    }}
+    function emailValidation(event: React.FormEvent<HTMLInputElement>){
+        const input = event.currentTarget.value;
+        setEmailInput(input)
+        if (event.currentTarget.checkValidity()==true) {
             setEmailError(false)
             return true;
         }
         else {
             setEmailError(true);
             return false
-        }}
-    // function that checks if zip, phone and email is valid, and if the rest are filled out
-    function checkForm(event: { preventDefault: () => void; }) {
-        event.preventDefault();
-        const phone = document.getElementById('phone') as HTMLInputElement
-        const email = document.getElementById('email') as HTMLInputElement
-        const zip = document.getElementById('zip') as HTMLInputElement
-    // check if the rest of the fields are filled out
-        const name = document.getElementById('name') as HTMLInputElement
-        const address = document.getElementById('address') as HTMLInputElement
-        const city = document.getElementById('city') as HTMLInputElement
-        const terms = document.getElementById('terms') as HTMLInputElement
+    }}
 
-        if (phone.checkValidity() == false) {
-            setPhoneError(true)
-        }
-        if (email.checkValidity() == false) {
-            setEmailError(true)
-        }
-        if (zip.checkValidity() == false) {
-            setZipError(true)
-        }
-        if (name.value == ""){
-            setNameError(true)
-        }
-        if (address.value === "") {
-            setAddressError(true)
+    async function submit(event: React.FormEvent<HTMLFormElement>){
+        validateAddress()
+        validateName()
+        event.preventDefault()
+        if (!zipError && !cityError && !addressError && !nameError && !phoneError && !emailError && !termsError){
+
+            const requestHeaders: HeadersInit = new Headers();
+            requestHeaders.set('Content-Type', 'application/json');
+    
+            const body = [{
+                form: "formData",       
+                country: "Denmark", 
+                zip: zipInput,
+                city: cityInput,
+                address: addressInput,
+                billing: billingInput,
+                name: nameInput,
+                phone: phoneInput,
+                email: emailInput,
+                company: companyInput,
+                cvr: cvrInput,
+                details: detailsInput,
+                marketing: marketingInput
+              },
+              {
+                cart: "cartData",
+                total: calculateTotal(),
+                items: cartItems
+              }]
+            const responseLogin = await fetch('https://eoevjfaf26tdvot.m.pipedream.net', {
+            method: 'POST',
+            headers: requestHeaders,
+            body: JSON.stringify(body)
+            })
+                 .then((response) => response)
+                 .then((data) => {
+                    console.log(data);
+                 })
+                 .catch((err) => {
+                    
+                    console.log(err.message);
+                 });
         }
 
-        if (city.value === "") {
-            setCityError(true)
-        }
-        if(terms.checked == false) {
-            setTermsError(true)
-        }
-        if(!zipError && !cityError && !nameError && !phoneError && !termsError && !emailError && !addressError) {
-            submitCart()
-        }
     }
-
-    async function submitCart(){
-
-        const requestHeaders: HeadersInit = new Headers();
-        requestHeaders.set('Content-Type', 'application/json');
-
-        const responseLogin = await fetch('https://eoqqodxrlkk1wwk.m.pipedream.net', {
-        method: 'POST',
-        headers: requestHeaders,
-        body: JSON.stringify(zipInput)
-        })
-             .then((response) => response)
-             .then((data) => {
-                console.log(data);
-                // Handle data
-             })
-             .catch((err) => {
-                
-                console.log(err.message);
-             });
-    }
-
-
-
-
-
-
-
-
-
+    useEffect(() => {
+        if (nameInput != ""){
+            validateName()
+        }
+        if (addressInput != ""){
+            validateAddress()
+        }
+    },[nameInput, addressInput])
 
     return (
+
         <div className = "user-form">
             <h1> Your Information </h1>
-            <form>
-                <label>
+            <form onSubmit={submit}>
+
+
+            <label>
                     <h2>Country: </h2>
                     Denmark
                 </label>
                 <label>
                     <h2>Zip Code: </h2>
-                    <input type="text" value={zipInput} autoFocus={true} onChange={zipValidation}
-                           required pattern="[0-9]{4}" name="zip" id="zip"/>
-                    {zipError && <div className={"error"}> Invalid zip code </div>}
-
-
-
+                    <input type="text" id="zip" value={zipInput} autoFocus={true} onChange={zipValidation}
+                           required pattern="[0-9]{4}" name="zip" />
+                    {zipError && zipInput == "" && <div className={"error"}> Zip code required </div>}
+                    {zipError && zipInput != "" && <div className={"error"}> Invalid zip code </div>}
                 </label>
                 <label>
                     <h2>City: </h2>
-                    <input type="text" id="city" value={cityInput} onChange={cityName}  required name="city" />
+                    <input type="text" id="city" value={cityInput || ""}  required name="city" readOnly />
                     {cityError && <div className={"error"}> City required </div>}
-
                 </label>
                 <label>
                     <h2>Address: </h2>
-                    <input type="text" id="address" required name="address" />
-                    {addressError && <div className={"error"}> Address required </div>}
+                    <input type="text" id="address" value={addressInput} onChange={e =>{setAddressInput(e.target.value)}}  required name="address" />
+                    {addressError && addressInput == "" &&  <div className={"error"}> Address required </div>}
+                </label>
+                <label>
+                    <h2>Billing Address: </h2>
+                    <input type="text" id="billing" value={billingInput} onChange={e =>setBillingInput(e.target.value)} name="billing" />
                 </label>
                 <label>
                     <h2>Name: </h2>
-                    <input type="text" id="name" required name="name" />
-                    {nameError && <div className={"error"}> Name required </div>}
-                </label> <br/>
+                    <input type="text" id="name" value={nameInput} onChange={e => {{setNameInput(e.target.value)}}} required name="name" />
+                    {nameError && nameInput == "" && <div className={"error"}> Name required </div>}
+                    {nameError && nameInput != "" && <div className={"error"}> Invalid name </div>}
+                </label>
                 <label>
                     <h2>Phone Number: </h2>
-                    <input type="tel" required pattern="[0-9]{8}" name="phone" id="phone" onChange={phoneValidation} />
-                    {phoneError && <div className={"error"}> Invalid phone number </div>}
+                    <input type="tel" value={phoneInput} required pattern="[0-9]{8}" name="phone" id="phone" onChange={phoneValidation} />
+                    {phoneError && phoneInput == "" && <div className={"error"}> Phone number required</div>}
+                    {phoneError && phoneInput != "" && <div className={"error"}> Invalid phone number </div>}
 
                 </label>
                 <label>
                     <h2> Email: </h2>
-                    <input type="email" required name="email" id="email" onChange={emailValidation} />
-                    {emailError && <div className={"error"}> Invalid Email </div>}
-
+                    <input type="email" value={emailInput} required name="email" id="email" onChange={emailValidation} />
+                    {emailError && emailInput == "" && <div className={"error"}> Email required </div>}
+                    {emailError && emailInput != "" && <div className={"error"}> Invalid Email </div>}
                 </label>
                 <label>
                     <h2>Company name: </h2>
-                    <input type="text" name="company" />
+                    <input type="text" value={companyInput} name="company" id="company" onChange={e => {setCompanyInput(e.target.value)}} />
                 </label>
                 <label>
                     <h2>Company CVR: </h2>
-                    <input type="text" name="cvr" pattern="{8}" />
-                </label> <br/>
-                <input type="checkbox" id="terms" name="terms" required/>
+                    <input type="text" value={cvrInput} name="cvr" id="cvr" onChange={e => {setCvrInput(e.target.value)}} pattern="{8}" />
+                </label> 
+                <label>
+                <h2>Comments: </h2>
+                <textarea value={detailsInput} onChange={e => {setDetailsInput(e.target.value)}} >
+
+                </textarea>
+                </label>
+                <br></br>
+                <input type="checkbox" onClick={e => {setTermsInput(!termsInput); setTermsError(!termsError)}} name="terms" id="terms" required/>
                     I accept the terms and conditions.
                 {termsError && <div className={"error"}> You must accept the terms and conditions </div>}
-                <br/>
-                <input type="checkbox" name="marketing" />
+                <br></br>
+                <input type="checkbox" onClick={e => {setMarketingInput(!marketingInput)}} name="marketing" />
                     I want to receive marketing emails.
-                <br/>
-                <button onClick={checkForm}>Go to payment</button>
+                <br></br>
+                <button onClick={e => {validateName(); validateAddress(); 
+                    if (cityInput == ""){setCityError(true)}; 
+                    if (zipInput == ""){setZipError(true)}; 
+                    if (phoneInput == ""){setPhoneError(true)};
+                    if (emailInput == ""){setEmailError(true)};
+                    if (termsInput != true){setTermsError(true)}}}>
+                    Submit</button>
             </form>
-
         </div>
-    )}
 
-
+    )
+}

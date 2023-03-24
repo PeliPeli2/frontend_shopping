@@ -144,7 +144,6 @@ export function CartContextProvider({ children }: CartProviderProps ){
             }
             else if (total >= 300){
                 total = total * (100-10)/100
-                console.log(cartItems)
                 return total
             }
             else return total

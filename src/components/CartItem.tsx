@@ -53,9 +53,6 @@ export function CartItem({item, cartData}: Props){
     },[])
 
     
-    useEffect(()=> {
-        console.log(cartItems)
-    },[!upSell])
 
     if(show && !upSell && upSellItem)
     return (
