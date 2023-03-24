@@ -150,6 +150,10 @@ export function UserForms(){
                     
                     console.log(err.message);
                  });
+            alert("Submission Successfull! Hurray!")
+        }
+        else{
+            alert("Submission Failed! Basket is empty!")
         }
 
     }
