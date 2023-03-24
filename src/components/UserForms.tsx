@@ -35,7 +35,7 @@ export function UserForms(){
     const [detailsInput, setDetailsInput] = useState("");
 
     const [termsInput, setTermsInput] = useState(false);
-    const [termsError, setTermsError] = useState(false);
+    const [termsError, setTermsError] = useState(true);
 
     const [marketingInput, setMarketingInput] = useState(false);
 
@@ -112,7 +112,7 @@ export function UserForms(){
         validateAddress()
         validateName()
         event.preventDefault()
-        if (!zipError && !cityError && !addressError && !nameError && !phoneError && !emailError && !termsError){
+        if (!zipError && !cityError && !addressError && !nameError && !phoneError && !emailError && !termsError && cartItems.length > 0){
 
             const requestHeaders: HeadersInit = new Headers();
             requestHeaders.set('Content-Type', 'application/json');
