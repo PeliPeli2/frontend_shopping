@@ -38,6 +38,8 @@ export function UserForms(){
 
     const [marketingInput, setMarketingInput] = useState(false);
 
+    const [loading, setLoading] = useState(false);
+
     async function fetchZipCodes() {
         const response = await fetch("https://api.dataforsyningen.dk/postnumre");
         const data = await response.json();
@@ -120,7 +122,7 @@ export function UserForms(){
         validateName()
         event.preventDefault()
         if (!zipError && !cityError && !addressError && !nameError && !phoneError && !emailError && !termsError && cartItems.length > 0){
-
+            setLoading(true)
             const requestHeaders: HeadersInit = new Headers();
             requestHeaders.set('Content-Type', 'application/json');
     
@@ -152,16 +154,21 @@ export function UserForms(){
                  .then((response) => response)
                  .then((data) => {
                     console.log(data);
+                    
+
                  })
                  .catch((err) => {
                     
                     console.log(err.message);
                  });
-            alert("Submission Successfull! Hurray!")
+            setLoading(false)
+         //   alert("Submission Successfull! Hurray!")
         }
         else{
+            setLoading(false)
             alert("Submission Failed! Basket is empty!")
         }
+
 
     }
     useEffect(() => {
@@ -259,7 +266,12 @@ export function UserForms(){
                     if (phoneInput == ""){setPhoneError(true)};
                     if (emailInput == ""){setEmailError(true)};
                     validateTerms()}}>
-                    Submit</button>
+                    {loading ? (
+                        <div className="loader"></div>
+                    ) : (
+                        "Submit"
+                    )}
+                    </button>
             </form>
         </div>
 
