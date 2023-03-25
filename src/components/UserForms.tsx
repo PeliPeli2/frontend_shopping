@@ -5,7 +5,6 @@ export function UserForms(){
 
     const {cartItems, calculateTotal} = useCartContext()
 
-
     const zipToCityMap = fetchZipCodes();
 
     const [zipInput, setZipInput] = useState("");
@@ -35,9 +34,11 @@ export function UserForms(){
     const [detailsInput, setDetailsInput] = useState("");
 
     const [termsInput, setTermsInput] = useState(false);
-    const [termsError, setTermsError] = useState(true);
+    const [termsError, setTermsError] = useState(false);
 
     const [marketingInput, setMarketingInput] = useState(false);
+
+    const [loading, setLoading] = useState(false);
 
     async function fetchZipCodes() {
         const response = await fetch("https://api.dataforsyningen.dk/postnumre");
@@ -107,13 +108,21 @@ export function UserForms(){
             setEmailError(true);
             return false
     }}
+    function validateTerms(){
+        if (termsInput == true){
+            setTermsError(false)
+        }
+        else {
+            setTermsError(true)
+        }
+    }
 
     async function submit(event: React.FormEvent<HTMLFormElement>){
         validateAddress()
         validateName()
         event.preventDefault()
         if (!zipError && !cityError && !addressError && !nameError && !phoneError && !emailError && !termsError && cartItems.length > 0){
-
+            setLoading(true)
             const requestHeaders: HeadersInit = new Headers();
             requestHeaders.set('Content-Type', 'application/json');
     
@@ -145,16 +154,21 @@ export function UserForms(){
                  .then((response) => response)
                  .then((data) => {
                     console.log(data);
+                    
+
                  })
                  .catch((err) => {
                     
                     console.log(err.message);
                  });
-            alert("Submission Successfull! Hurray!")
+            setLoading(false)
+         //   alert("Submission Successfull! Hurray!")
         }
         else{
+            setLoading(false)
             alert("Submission Failed! Basket is empty!")
         }
+
 
     }
     useEffect(() => {
@@ -166,6 +180,13 @@ export function UserForms(){
         }
     },[nameInput, addressInput])
 
+    useEffect(() => {
+        if (termsInput == true){
+            validateTerms()
+        }
+
+        
+    }, [termsInput])
     return (
 
         <div className = "user-form">
@@ -232,7 +253,7 @@ export function UserForms(){
                 </textarea>
                 </label>
                 <br></br>
-                <input type="checkbox" onClick={e => {setTermsInput(!termsInput); setTermsError(!termsError)}} name="terms" id="terms" required/>
+                <input type="checkbox" onClick={e => {setTermsInput(!termsInput);}} name="terms" id="terms" required/>
                     I accept the terms and conditions.
                 {termsError && <div className={"error"}> You must accept the terms and conditions </div>}
                 <br></br>
@@ -244,8 +265,13 @@ export function UserForms(){
                     if (zipInput == ""){setZipError(true)}; 
                     if (phoneInput == ""){setPhoneError(true)};
                     if (emailInput == ""){setEmailError(true)};
-                    if (termsInput != true){setTermsError(true)}}}>
-                    Submit</button>
+                    validateTerms()}}>
+                    {loading ? (
+                        <div className="loader"></div>
+                    ) : (
+                        "Submit"
+                    )}
+                    </button>
             </form>
         </div>
 

@@ -59,7 +59,7 @@ export function CartItem({item, cartData}: Props){
         
     <div className ="cart-container">
         <div className="image-box">
-            <img src={item.imageUrl}>
+            <img src={item.imageUrl} alt={item.name.split(", ")[0]}>
             </img>
 
         </div>
@@ -117,7 +117,7 @@ export function CartItem({item, cartData}: Props){
         
             <div className ="cart-container">
             <div className="image-box">
-                <img src={upSellItem.imageUrl}>
+                <img src={upSellItem.imageUrl} alt={upSellItem.name.split(",")[0]}>
                 </img>
     
             </div>
