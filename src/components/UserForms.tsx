@@ -5,7 +5,6 @@ export function UserForms(){
 
     const {cartItems, calculateTotal} = useCartContext()
 
-
     const zipToCityMap = fetchZipCodes();
 
     const [zipInput, setZipInput] = useState("");
@@ -35,7 +34,7 @@ export function UserForms(){
     const [detailsInput, setDetailsInput] = useState("");
 
     const [termsInput, setTermsInput] = useState(false);
-    const [termsError, setTermsError] = useState(true);
+    const [termsError, setTermsError] = useState(false);
 
     const [marketingInput, setMarketingInput] = useState(false);
 
@@ -107,6 +106,14 @@ export function UserForms(){
             setEmailError(true);
             return false
     }}
+    function validateTerms(){
+        if (termsInput == true){
+            setTermsError(false)
+        }
+        else {
+            setTermsError(true)
+        }
+    }
 
     async function submit(event: React.FormEvent<HTMLFormElement>){
         validateAddress()
@@ -166,6 +173,13 @@ export function UserForms(){
         }
     },[nameInput, addressInput])
 
+    useEffect(() => {
+        if (termsInput == true){
+            validateTerms()
+        }
+
+        
+    }, [termsInput])
     return (
 
         <div className = "user-form">
@@ -232,7 +246,7 @@ export function UserForms(){
                 </textarea>
                 </label>
                 <br></br>
-                <input type="checkbox" onClick={e => {setTermsInput(!termsInput); setTermsError(!termsError)}} name="terms" id="terms" required/>
+                <input type="checkbox" onClick={e => {setTermsInput(!termsInput);}} name="terms" id="terms" required/>
                     I accept the terms and conditions.
                 {termsError && <div className={"error"}> You must accept the terms and conditions </div>}
                 <br></br>
@@ -244,7 +258,7 @@ export function UserForms(){
                     if (zipInput == ""){setZipError(true)}; 
                     if (phoneInput == ""){setPhoneError(true)};
                     if (emailInput == ""){setEmailError(true)};
-                    if (termsInput != true){setTermsError(true)}}}>
+                    validateTerms()}}>
                     Submit</button>
             </form>
         </div>
