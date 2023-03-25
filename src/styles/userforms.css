@@ -1,14 +1,42 @@
+div{
+    
+}
+.user-form{
+    background-color: white;
+    width: 50%;
+}
+
+
+form{
+    background-color: white;
+}
 .error {
     color: red
 }
 input:required:valid {
     border: 2px solid green
 }
-input.required:invalid {
+input{
+    background-color: white;
+}
+.required:invalid {
     border: 2px solid red
 }
 textarea{
     width: 300px;
     height: 100px;
-    
+    background-color: local;
+}
+
+
+
+.label{
+    background-color: local;
+  }
+
+label h2{
+    background-color: white;
+}
+.text{
+    background-color: local;
 }

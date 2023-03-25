@@ -13,9 +13,11 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  
 }
 body {
     background-color: white;
+    
 }
 
 ul {
@@ -25,3 +27,13 @@ ul {
   padding: 0;
   justify-content: center;
 }
+h1{
+  background: local;
+}
+h2{
+  background-color: local;
+}
+
+
+/*Note for self, continue to sort out the different issues and possiblely ...
+  add more divs to "constrain manipulation of design"*/
