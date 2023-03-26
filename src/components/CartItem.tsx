@@ -85,7 +85,7 @@ export function CartItem({item, cartData}: Props){
         </button>
         </div>
         <div className = "adjusters">
-            <button className = "increment-button"  onClick={() => {
+            <button className = "increment-button" onClick={() => {
                 incrementQuantity(item.id,)
                 calculateCost(item.id, item.price, item.rebatePercent, item.rebateQuantity)}}>
                 increment
