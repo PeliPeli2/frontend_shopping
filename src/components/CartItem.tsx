@@ -68,7 +68,7 @@ export function CartItem({item, cartData}: Props){
             {item.name.split(", ")[0]}
             </h1>
             <h2>
-                some info
+                {"Item cost: "+ item.price}
             </h2>
             <h3>
                 {itemNudge}
@@ -126,7 +126,7 @@ export function CartItem({item, cartData}: Props){
                 {upSellItem.name.split(",")[0]}
                 </h1>
                 <h2>
-                    some info
+                {"Item cost: "+ upSellItem.price}
                 </h2>
                 <h3>
                     {upSellItemNudge}
