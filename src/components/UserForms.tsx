@@ -198,18 +198,20 @@ export function UserForms(){
                     <h2>Country: </h2>
                     Denmark
                 </label>
-                <label>
-                    <h2>Zip Code: </h2>
-                    <input type="text" id="zip" value={zipInput} autoFocus={true} onChange={zipValidation}
-                           required pattern="[0-9]{4}" name="zip" />
-                    {zipError && zipInput == "" && <div className={"error"}> Zip code required </div>}
-                    {zipError && zipInput != "" && <div className={"error"}> Invalid zip code </div>}
-                </label>
-                <label>
-                    <h2>City: </h2>
-                    <input type="text" id="city" value={cityInput || ""}  required name="city" readOnly />
-                    {cityError && <div className={"error"}> City required </div>}
-                </label>
+                <div className="zip_city">
+                    <label>
+                        <h2>Zip Code: </h2>
+                        <input type="text" id="zip" value={zipInput} autoFocus={true} onChange={zipValidation}
+                            required pattern="[0-9]{4}" name="zip" />
+                        {zipError && zipInput == "" && <div className={"error"}> Zip code required </div>}
+                        {zipError && zipInput != "" && <div className={"error"}> Invalid zip code </div>}
+                    </label>
+                    <label>
+                        <h2>City: </h2>
+                        <input type="text" id="city" value={cityInput || ""}  required name="city" readOnly />
+                        {cityError && <div className={"error"}> City required </div>}
+                    </label>
+                </div>
                 <label>
                     <h2>Address: </h2>
                     <input type="text" id="address" value={addressInput} onChange={e =>{setAddressInput(e.target.value)}}  required name="address" />
@@ -260,6 +262,7 @@ export function UserForms(){
                 <input type="checkbox" onClick={e => {setMarketingInput(!marketingInput)}} name="marketing" />
                     I want to receive marketing emails.
                 <br></br>
+                <div>
                 <button onClick={e => {validateName(); validateAddress(); 
                     if (cityInput == ""){setCityError(true)}; 
                     if (zipInput == ""){setZipError(true)}; 
@@ -272,6 +275,7 @@ export function UserForms(){
                         "Submit"
                     )}
                     </button>
+                </div>
             </form>
         </div>
 

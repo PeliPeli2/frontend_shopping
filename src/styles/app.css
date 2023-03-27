@@ -16,12 +16,14 @@
 }
 body {
     background-color: white;
+    padding-left: 2em;
 }
 
 ul {
   list-style: none;
-  width: 100%;
-  margin: 0;
-  padding: 0;
+  width: fit-content;
+  padding: 15px;
   justify-content: center;
+  background-color: #3bceac;
+  border-radius: 0.6em;
 }

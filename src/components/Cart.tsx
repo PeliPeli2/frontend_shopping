@@ -21,13 +21,15 @@ export function Cart({cartData}: CartItemsProps){
 
     return (
         <ul>
-            <h2 >{formatTotal(total)}</h2>
             {cartData.filter(item => item.upsellProductId != null).slice(0,5).map(filtereditem=> (
                 
                 <li key={filtereditem.id}>
                     <CartItem item={filtereditem} cartData={{cartData}}/>
                 </li>
             ))}
+            <div className="total">
+                <h2 >{formatTotal(total)}</h2>
+            </div>
         </ul>
     )
 }

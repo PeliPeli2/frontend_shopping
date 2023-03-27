@@ -6,8 +6,16 @@ li {
 
     min-width: min-content ;
     max-width: 50vW;
+    padding: 0.2em;
 }
 
+
+.total{
+    margin: auto;
+    padding-top: 0;
+    display: flex;
+    place-content: end;
+}
 
 .cart-container{
     height: 100px;
@@ -25,7 +33,10 @@ li {
     justify-content: center;
 
 }
-   
+
+li div{
+    border-radius: 0.4em;
+}
 
 li img {
     height: 90%;
@@ -72,12 +83,21 @@ li img {
     justify-content: center;
     margin-block-start: 0;
 }
-.adjusters p{
+
+.adjusters {
+    background: local;
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.adjusters h4{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    background: local;
     display: flex;
     justify-content: center;
-    margin-top: 5px;
-    margin-bottom: 0px;
-    font-weight: bold;
 }
 
 .item-cost{
@@ -113,8 +133,7 @@ li img {
 	top:1px;
 }
 .increment-button {
-    width: fit-content;
-    margin-top: 12px;
+    width: 85px;
 	box-shadow: 0px 0px 0px 2px #9fb4f2;
 	background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
 	background-color:#7892c2;
@@ -138,21 +157,20 @@ li img {
 }
 
 .decrement-button {
-    margin-top: 5px;
-    width: 100px;
+    width: 85px;
 	box-shadow: 0px 0px 0px 2px #9fb4f2;
 	background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
 	background-color:#7892c2;
 	border-radius:10px;
 	border:1px solid #4e6096;
 	display:inline-block;
+    margin: auto;
 	cursor:pointer;
 	color:#ffffff;
-	font-size:16px;
+	font-size:14px;
 	padding:2px 8px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #283966;
-    margin-bottom: 10px;
 }
 .decrement-button:hover {
 	background:linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
@@ -163,22 +181,25 @@ li img {
 	top:1px;
 }
 .delete{
+    width: 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin-block-start: 0;
+    background: local;
 }
 .delete-button {
-    width: 100px;
+    width: fit-content;
 	box-shadow: 0px 0px 0px 2px #f29f9f;
 	background:linear-gradient(to bottom, #c27878 5%, #9e4747 100%);
 	background-color:#c27878;
 	border-radius:10px;
 	border:1px solid #964e4e;
 	display:inline-block;
+    margin: auto;
 	cursor:pointer;
 	color:#ffffff;
-	font-size:16px;
+	font-size:14px;
 	padding:2px 8px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #662828;

@@ -1,3 +1,11 @@
+div .user-form{
+    width: fit-content;
+}
+
+.form{
+    width: fit-content;
+}
+
 .error {
     color: red
 }
@@ -13,6 +21,12 @@ textarea{
     
 }
 
+.zip_city{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
 .loader {
     width: fit-content;
     height: fit-content;
@@ -22,6 +36,19 @@ textarea{
     -webkit-animation: spin 2s linear infinite; /* Safari */
     animation: spin 2s linear infinite;
   }
+
+  form div{
+    width: auto;
+    display: flex;
+    place-content: end;
+  }
+  form h2{
+    font-size: 1em;
+  }
+
+.zip{
+    width: 5em;
+}
   
   /* Safari */
   @-webkit-keyframes spin {
