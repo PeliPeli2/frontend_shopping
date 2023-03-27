@@ -262,7 +262,7 @@ export function UserForms(){
                 <input type="checkbox" onClick={e => {setMarketingInput(!marketingInput)}} name="marketing" />
                     I want to receive marketing emails.
                 <br></br>
-                <div>
+                <div className="submit">
                 <button onClick={e => {validateName(); validateAddress(); 
                     if (cityInput == ""){setCityError(true)}; 
                     if (zipInput == ""){setZipError(true)}; 

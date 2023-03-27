@@ -37,7 +37,7 @@ textarea{
     animation: spin 2s linear infinite;
   }
 
-  form div{
+  .submit{
     width: auto;
     display: flex;
     place-content: end;
