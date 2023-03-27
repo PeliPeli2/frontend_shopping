@@ -73,127 +73,102 @@ describe("removing first item", () => {
     
 }); 
 
+describe ("increment & decrement first item", () => {
+  it("incrementing & decrementing", async () => {
+    render(<App />);
 
+    //wait for app to be rendered
+    expect(await screen.findByRole("heading", {name: "Shopping Cart"})).toBeInTheDocument()
+    //fire event incrementing item
+    fireEvent.click(screen.getAllByRole("button", {name : "increment"})[0])
+    fireEvent.click(screen.getAllByRole("button", {name : "increment"})[0])
 
+    // check if quantity has increased to 2 
+    expect(await screen.findByRole("heading", {name: "2"})).toBeInTheDocument()
+    expect(screen.getAllByRole("heading", {level : 4, name : "2"})[0])
+    // fire event decementing item
+    fireEvent.click(screen.getAllByRole("button", {name : "decrement"})[0])
 
-describe ("increment & decrement first item")
-describe ("check initial total to include 10% discount")
-describe ("check item cost & total after incrementing")
-describe ("check total after removing first item")
-describe ("check new name on first item after upsell clicked")
+    expect(await screen.findByRole("heading", {name: "1"})).toBeInTheDocument()
+    expect(screen.getAllByRole("heading", {level : 4, name : "1"})[0])
 
+  })
+})
 
+describe ("check total cost & item cost & total including 10% after 300", () => {
+  it("Setting up initial cart & check total", async () => {
+    render(<App />);
 
+    //wait for app to be rendered
+    expect(await screen.findByRole("heading", {name: "Shopping Cart"})).toBeInTheDocument()
 
+    // increment all items to 1
+    const buttons = screen.getAllByRole("button", {name : "increment"})
+    buttons.forEach((item) => {
+      fireEvent.click(item)
+    })
 
+    // total should be 560 so if it is 504 it included the discount
+    expect(await screen.findByRole("heading", {name: "Total Cost: 504 DKK"})).toBeInTheDocument()
+    // check first item to see if cost has increased
+    expect (screen.getAllByRole("heading", {name: "150 DKK", level: 4})[0])
 
+  })
+})
 
+describe("check item discount after incrementing & decrementing", () => {
+  it("increment twice and decrement and checking", async () => {
+    render(<App />);
 
+    //wait for app to be rendered
+    expect(await screen.findByRole("heading", {name: "Shopping Cart"})).toBeInTheDocument()
 
+    //fire event incrementing item
+    fireEvent.click(screen.getAllByRole("button", {name : "increment"})[0])
+    fireEvent.click(screen.getAllByRole("button", {name : "increment"})[0])
 
+    // check first item to see if cost of first item is 225 to include the 2 quantity discount
+    expect (screen.getAllByRole("heading", {name: "225 DKK", level: 4})[0]).toBeInTheDocument()
 
+    fireEvent.click(screen.getAllByRole("button", {name : "decrement"})[0])
 
+    // check first item to see if cost of first item is 150 to remove the discount and reset to normal cost
+    expect (screen.getAllByRole("heading", {name: "150 DKK", level: 4})[0]).toBeInTheDocument()
+  })
+})
 
+describe ("check total after removing first item", () => {
+  it("increment once check total then remove and check again", async () => {
+    render(<App />);
 
+  //wait for app to be rendered
+  expect(await screen.findByRole("heading", {name: "Shopping Cart"})).toBeInTheDocument()
+
+  //fire event incrementing item
+  fireEvent.click(screen.getAllByRole("button", {name : "increment"})[0])
+
+  // check total to be incremented
+  expect(await screen.findByRole("heading", {name: "Total Cost: 150 DKK"})).toBeInTheDocument()
+
+  //fire event incrementing item
+  fireEvent.click(screen.getAllByRole("button", {name : "remove"})[0])
+
+  //check total to be empty
+  expect(await screen.findByRole("heading", {name: "Basket is Empty"})).toBeInTheDocument()
+  })
+})
+
+describe ("check new name on first item after upsell clicked", () => {
+  it("upselling and checking first item name", async () => {
+    render(<App />);
+
+  //wait for app to be rendered
+  expect(await screen.findByRole("heading", {name: "Shopping Cart"})).toBeInTheDocument()
+
+  //fire event incrementing item
+  fireEvent.click(screen.getAllByRole("button", {name : "Upgrade Item"})[0])
+  })
+})
 
 
 });
-describe("item cards contains", () => {
-  //should check each card got an ID
-  it("Each card has an ID", () => {
-    const {container} = render(<App />);
-    const items = container.getElementsByClassName("item-card");
-    
-    for(let i = 1; i < items.length; i++){ 
-      expect(items[i-1].id!=items[i].id).toBeTruthy();
-    };
-    
-  }); 
-
-});
-
-
-
-describe("item cards contain buttons",() => {
-  //Loops the whole item cart when created and checks if all buttons are on each card.
-  it("Buttons for de-/incrementing and deleting", () => {
-    const {container} = render(<App />);
-    const items = container.getElementsByClassName("item-card");
-
-    for(let i = 0; i < items.length; i++){
-      expect(items[i].getElementsByClassName("decrement-button")).toBeTruthy();
-      expect(items[i].getElementsByClassName("increment-button")).toBeTruthy();
-      expect(items[i].getElementsByClassName("delete-button")).toBeTruthy();
-    };
-}); 
-
-});
-
-
-
-  //TODO make 3 test that checks userinput.click on buttons.
-describe("Button's functionality", () => {
-  //in the making.
-  it("Button for incrementing item", () => {
-    const {container} = render(<App />);
-    const items = container.getElementsByClassName("adjusters");
-    
-    for(let i = 0; i < items.length; i++){ 
-      let buttons = items[i].childNodes;
-      
-      
-      //presses increment button and checks if there been an "onclick" called.
-      expect(fireEvent.click(buttons[1]));
-      //expect(onclick).toBeCalled();
-    };
-  });
-
-
-
-
-  //in the making.
-  it("Button for decrementing item", () => {
-    const {container} = render(<App />);
-    const items = container.getElementsByClassName("item-card");
-    
-    for(let i = 0; i < items.length; i++){ 
-      let buttons = items[i].childNodes;
-      
-      //presses decrement button and checks if there been an "onclick" called.
-      expect(fireEvent.click(buttons[0]));
-      //expect(onclick).toBeCalled();      
-      
-    };
-  });
-
-
-
-  //this should work.
-  it("Button for deleting item", () => {
-    const {container} = render(<App />);
-    const items = container.getElementsByClassName("item-card");
-    
-
-    for(let i = 0; i < items.length; i++){ 
-      let card = items[i];
-      let cardid = items[i].id;
-      let button = items[i].querySelector('button');
-
-      //checks if card is on the screen
-      expect(card).toBeInTheDocument();
-      
-      //presses delete botton and checks if its removed completely.
-     // fireEvent.click(button);
-      //expect(onclick).toBeCalled();      
-      expect(card).toBeInTheDocument();
-    };
-  });
-
-});
-
-    /*
-    
-
-
-
-*/

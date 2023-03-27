@@ -90,18 +90,18 @@ export function CartItem({item, cartData}: Props){
                 calculateCost(item.id, item.price, item.rebatePercent, item.rebateQuantity)}}>
                 increment
             </button>
-            <p>
+            <h4 className = "item-quantity">
             {itemQuantity}
-            </p>
+            </h4>
             <button className = "decrement-button" onClick={() => {
                 decrementQuantity(item.id)
                 calculateCost(item.id, item.price, item.rebatePercent, item.rebateQuantity)}}>
                 decrement
             </button>
         </div>
-        <div className = "item-cost">
+        <h4 className = "item-cost">
             {itemCost + " DKK"}
-        </div>
+        </h4>
         <div className ="delete">
         <button className = "delete-button" onClick={() => {
             setShow(false)
@@ -139,18 +139,18 @@ export function CartItem({item, cartData}: Props){
                     calculateCost(upSellItem.id, upSellItem.price, upSellItem.rebatePercent, upSellItem.rebateQuantity)}}>
                     increment
                 </button>
-                <p>
+                <h4 className = "item-quantity">
                 {upSellItemQuantity}
-                </p>
+                </h4>
                 <button className = "decrement-button" onClick={() => {
                     decrementQuantity(upSellItem.id)
                     calculateCost(upSellItem.id, upSellItem.price, upSellItem.rebatePercent, upSellItem.rebateQuantity)}}>
                     decrement
                 </button>
             </div>
-            <div className = "item-cost">
+            <h4 className = "item-cost">
                 {upSellItemCost + " DKK"}
-            </div>
+            </h4>
             <div className ="delete">
             <button className = "delete-button" onClick={() => {
                 setShow(false)
