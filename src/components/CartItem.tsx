@@ -49,7 +49,6 @@ export function CartItem({item, cartData}: Props){
     useEffect(() => {
         incrementQuantity(item.id)
         calculateCost(item.id, item.price, item.rebatePercent, item.rebateQuantity)
-        
     },[])
 
     
