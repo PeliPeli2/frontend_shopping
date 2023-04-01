@@ -1,15 +1,11 @@
-div{
-    
-}
-.user-form{
-    background-color: white;
-    width: 50%;
+div .user-form{
+    width: fit-content;
 }
 
-
-form{
-    background-color: white;
+.form{
+    width: fit-content;
 }
+
 .error {
     color: red
 }
@@ -41,6 +37,12 @@ label h2{
     background-color: local;
 }
 
+.zip_city{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
 .loader {
     width: fit-content;
     height: fit-content;
@@ -50,6 +52,19 @@ label h2{
     -webkit-animation: spin 2s linear infinite; /* Safari */
     animation: spin 2s linear infinite;
   }
+
+  .submit{
+    width: auto;
+    display: flex;
+    place-content: end;
+  }
+  form h2{
+    font-size: 1em;
+  }
+
+.zip{
+    width: 5em;
+}
   
   /* Safari */
   @-webkit-keyframes spin {

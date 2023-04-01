@@ -49,7 +49,6 @@ export function CartItem({item, cartData}: Props){
     useEffect(() => {
         incrementQuantity(item.id)
         calculateCost(item.id, item.price, item.rebatePercent, item.rebateQuantity)
-        
     },[])
 
     
@@ -68,7 +67,7 @@ export function CartItem({item, cartData}: Props){
             {item.name.split(", ")[0]}
             </h1>
             <h2>
-                some info
+                {"Item cost: "+ item.price}
             </h2>
             <h3>
                 {itemNudge}
@@ -85,23 +84,23 @@ export function CartItem({item, cartData}: Props){
         </button>
         </div>
         <div className = "adjusters">
-            <button className = "increment-button"  onClick={() => {
+            <button className = "increment-button" onClick={() => {
                 incrementQuantity(item.id,)
                 calculateCost(item.id, item.price, item.rebatePercent, item.rebateQuantity)}}>
                 increment
             </button>
-            <p>
+            <h4 className = "item-quantity">
             {itemQuantity}
-            </p>
+            </h4>
             <button className = "decrement-button" onClick={() => {
                 decrementQuantity(item.id)
                 calculateCost(item.id, item.price, item.rebatePercent, item.rebateQuantity)}}>
                 decrement
             </button>
         </div>
-        <div className = "item-cost">
+        <h4 className = "item-cost">
             {itemCost + " DKK"}
-        </div>
+        </h4>
         <div className ="delete">
         <button className = "delete-button" onClick={() => {
             setShow(false)
@@ -126,7 +125,7 @@ export function CartItem({item, cartData}: Props){
                 {upSellItem.name.split(",")[0]}
                 </h1>
                 <h2>
-                    some info
+                {"Item cost: "+ upSellItem.price}
                 </h2>
                 <h3>
                     {upSellItemNudge}
@@ -139,18 +138,18 @@ export function CartItem({item, cartData}: Props){
                     calculateCost(upSellItem.id, upSellItem.price, upSellItem.rebatePercent, upSellItem.rebateQuantity)}}>
                     increment
                 </button>
-                <p>
+                <h4 className = "item-quantity">
                 {upSellItemQuantity}
-                </p>
+                </h4>
                 <button className = "decrement-button" onClick={() => {
                     decrementQuantity(upSellItem.id)
                     calculateCost(upSellItem.id, upSellItem.price, upSellItem.rebatePercent, upSellItem.rebateQuantity)}}>
                     decrement
                 </button>
             </div>
-            <div className = "item-cost">
+            <h4 className = "item-cost">
                 {upSellItemCost + " DKK"}
-            </div>
+            </h4>
             <div className ="delete">
             <button className = "delete-button" onClick={() => {
                 setShow(false)

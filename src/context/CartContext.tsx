@@ -43,7 +43,7 @@ export function CartContextProvider({ children }: CartProviderProps ){
     function incrementQuantity(id: string){
         setCartItems(currentItems => {
             if (currentItems.find(item => item.id === id ) == null){
-                return [...currentItems, {id, quantity: 0, total: 0}]
+                return [...currentItems, {id, quantity: 1, total: 0}]
             }
             else {
                 return currentItems.map(item => {
