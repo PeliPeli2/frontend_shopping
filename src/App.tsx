@@ -5,6 +5,8 @@ import { CartContextProvider } from './context/CartContext';
 export default function App() {
 
   const [cartdata, setCartData] = useState();
+  const [page, setPage] = useState("count");
+  const [navigating, setNavigating] = useState(true);
 
   useEffect(() => {
       // fetch data
@@ -20,19 +22,46 @@ export default function App() {
       dataFetch();
   }, []);
 
+  useEffect(() => {
+    function popstateHandler() {
+      const url = new URLSearchParams(window.location.search);
+      const urlPage = url.get("page");
+      console.log("popstate", { urlPage });
+      setPage(urlPage || "cart");
+      setNavigating(true);
+    }
+    addEventListener("popstate", popstateHandler);
+    popstateHandler();
+    return () => {
+      removeEventListener("popstate", popstateHandler);
+    };
+  }, []);
+  useEffect(() => {
+    setNavigating(false);
+  }, [navigating]);
+  function navigate(ev: React.MouseEvent<HTMLAnchorElement>, newPage: string) {
+    ev.preventDefault();
+    history.pushState({}, "", `?page=${newPage}`);
+    dispatchEvent(new PopStateEvent("popstate"));
+  }
+  const pageClasses = `card ${navigating ? "navigating" : "navigated"}`;
+
   if (cartdata){
       return (
     <CartContextProvider>
       <div className = "app">
         <h1>Shopping Cart</h1>
         <div>
-        <Cart cartData={cartdata}/>
+      <a onClick={(ev) => navigate(ev, "cart")}>Cart</a> |{" "}
+      <a onClick={(ev) => navigate(ev, "form")}>Form</a>
+      {page === "cart" && (
+        
+      <Cart cartData={cartdata}/>
+      )}
+      {page === "form" && (
+      <UserForms/>
+      )}
         </div>
-        {    
-        <div>
-        <UserForms/>
-        </div>
-    }
       </div>
     </CartContextProvider>
       )
