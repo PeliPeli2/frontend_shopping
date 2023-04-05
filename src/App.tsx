@@ -2,6 +2,7 @@ import {Cart} from './components/Cart'
 import { UserForms } from './components/UserForms'
 import { useEffect, useState } from 'react';
 import { CartContextProvider } from './context/CartContext';
+import { FormContextProvider } from './context/FormContext';
 export default function App() {
 
   const [cartdata, setCartData] = useState();
@@ -22,6 +23,7 @@ export default function App() {
       dataFetch();
   }, []);
 
+
   useEffect(() => {
     function popstateHandler() {
       const url = new URLSearchParams(window.location.search);
@@ -32,6 +34,8 @@ export default function App() {
     }
     addEventListener("popstate", popstateHandler);
     popstateHandler();
+    // force it to start on cart on refresh
+    setPage("cart")
     return () => {
       removeEventListener("popstate", popstateHandler);
     };
@@ -44,10 +48,9 @@ export default function App() {
     history.pushState({}, "", `?page=${newPage}`);
     dispatchEvent(new PopStateEvent("popstate"));
   }
-  const pageClasses = `card ${navigating ? "navigating" : "navigated"}`;
-
   if (cartdata){
       return (
+    <FormContextProvider>
     <CartContextProvider>
       <div className = "app">
         <h1>Shopping Cart</h1>
@@ -64,6 +67,7 @@ export default function App() {
         </div>
       </div>
     </CartContextProvider>
+    </FormContextProvider>
       )
   }
   else {

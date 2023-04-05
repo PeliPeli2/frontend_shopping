@@ -1,42 +1,35 @@
 import { useEffect, useState } from "react";
 import { useCartContext } from "../context/CartContext";
+import { useFormContext } from "../context/FormContext";
 import '../styles/userforms.css'
 export function UserForms(){
 
     const {cartItems, calculateTotal} = useCartContext()
 
+    const {
+        zipInput, setZipInput, 
+        cityInput, setCityInput, 
+        addressInput, setAddressInput,
+        billingInput, setBillingInput, 
+        nameInput, setNameInput, 
+        phoneInput, setPhoneInput,
+        emailInput, setEmailInput,
+        companyInput, setCompanyInput,
+        cvrInput, setCvrInput,
+        detailsInput, setDetailsInput,
+        termsInput, setTermsInput,
+        marketingInput, setMarketingInput,
+        zipError, setZipError,
+        cityError, setCityError,
+        addressError, setAddressError,
+        nameError, setNameError,
+        phoneError, setPhoneError,
+        emailError, setEmailError,
+        termsError, setTermsError,
+    
+    } = useFormContext()
+
     const zipToCityMap = fetchZipCodes();
-
-    const [zipInput, setZipInput] = useState("");
-    const [zipError, setZipError] = useState(false);
-
-    const [cityInput, setCityInput] = useState("");
-    const [cityError, setCityError] = useState(false);
-
-    const [addressInput, setAddressInput] = useState("");
-    const [addressError, setAddressError] = useState(false);
-
-    const [billingInput, setBillingInput] = useState("");
-
-    const [nameInput, setNameInput] = useState("");
-    const [nameError, setNameError] = useState(false);
-
-    const [phoneInput, setPhoneInput] = useState("");
-    const [phoneError, setPhoneError] = useState(false);
-
-    const [emailInput, setEmailInput] = useState("");
-    const [emailError, setEmailError] = useState(false);
-
-    const [companyInput, setCompanyInput] = useState("");
-
-    const [cvrInput, setCvrInput] = useState("");
-
-    const [detailsInput, setDetailsInput] = useState("");
-
-    const [termsInput, setTermsInput] = useState(false);
-    const [termsError, setTermsError] = useState(false);
-
-    const [marketingInput, setMarketingInput] = useState(false);
 
     const [loading, setLoading] = useState(false);
 
@@ -74,7 +67,6 @@ export function UserForms(){
         return false;
     }
     
-
     function validateAddress(){
         if (addressInput == ""){
             setAddressError(true)
@@ -144,26 +136,33 @@ export function UserForms(){
               {
                 cart: "cartData",
                 total: calculateTotal(),
-                items: cartItems
+                items: cartItems.filter((item) => {
+                    if (item.show === true)
+                    return item
+                })
               }]
-            const responseLogin = await fetch('https://eoevjfaf26tdvot.m.pipedream.net', {
-            method: 'POST',
-            headers: requestHeaders,
-            body: JSON.stringify(body)
-            })
-                 .then((response) => response)
-                 .then((data) => {
-                    console.log(data);
-                    
-
+            const requestOptions = {
+                method: 'POST',
+                headers: requestHeaders,
+                body: JSON.stringify(body)
+            }
+            await fetch('https://eoevjfaf26tdvot.m.pipedream.net', requestOptions)
+                 .then((response) => {
+                    if (!response.ok){
+                        console.log(response.status)
+                        return Promise.reject("network error")
+                    }
+                    else {
+                        console.log(response)
+                    }
                  })
-                 .catch((err) => {
-                    
+                 .catch((err) => {      
                     console.log(err.message);
                  });
             setLoading(false)
-         //   alert("Submission Successfull! Hurray!")
+            alert("Submission Successfull! Hurray!")
         }
+
         else{
             setLoading(false)
             alert("Submission Failed! Basket is empty!")
@@ -255,11 +254,11 @@ export function UserForms(){
                 </textarea>
                 </label>
                 <br></br>
-                <input type="checkbox" onClick={e => {setTermsInput(!termsInput);}} name="terms" id="terms" required/>
+                <input type="checkbox" defaultChecked={termsInput} onClick={e => {setTermsInput(!termsInput);}} name="terms" id="terms" required/>
                     I accept the terms and conditions.
                 {termsError && <div className={"error"}> You must accept the terms and conditions </div>}
                 <br></br>
-                <input type="checkbox" onClick={e => {setMarketingInput(!marketingInput)}} name="marketing" />
+                <input type="checkbox" defaultChecked={marketingInput} onClick={e => {setMarketingInput(!marketingInput)}} name="marketing" />
                     I want to receive marketing emails.
                 <br></br>
                 <div className="submit">

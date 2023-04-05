@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useCartContext } from "../context/CartContext";
-
+import { Item } from "./Item";
+import { UpsellItem } from "./UpsellItem";
 
 interface ItemProp {
     id: string;
@@ -30,136 +31,32 @@ interface Props {
 
 export function CartItem({item, cartData}: Props){
 
-    const {getItemQuantity, incrementQuantity, decrementQuantity, removeItem, upsellItem, cartItems,getCost, calculateCost, getItemNudge} = useCartContext()
-
-    const itemQuantity = getItemQuantity(item.id)
-    const [show, setShow] = useState(true)
-    const [upSell, setUpSell] = useState(false)
-    const itemNudge = getItemNudge(item.id, item.rebateQuantity, item.rebatePercent)
-    const itemCost = getCost(item.id)
+    const {setItem, getItem, } = useCartContext()
 
     const upSellItem = cartData.cartData.find(cartItem => cartItem.id === item.upsellProductId)
-    const upSellItemNudge = getItemNudge(upSellItem!!.id, upSellItem!!.rebateQuantity, upSellItem!!.rebatePercent)
-    const upSellItemQuantity = getItemQuantity(item.upsellProductId)
-    const upSellItemCost = getCost(item.upsellProductId)
-
-    
-    const [itemData, setItemData] = useState(item)
+    const [itemData, setItemData] = useState(() => {
+        if (upSellItem){
+        setItem(item.id, upSellItem.id)
+        return getItem(item.id, upSellItem.id)
+        }
+    })
 
     useEffect(() => {
-        incrementQuantity(item.id)
-        calculateCost(item.id, item.price, item.rebatePercent, item.rebateQuantity)
-    },[])
+        if (upSellItem){
+        setItemData(getItem(item.id, upSellItem.id))
+        }
+    })
 
-    
-
-    if(show && !upSell && upSellItem)
+    if(itemData && itemData.show && !itemData.upSell)
     return (
-        
-    <div className ="cart-container">
-        <div className="image-box">
-            <img src={item.imageUrl} alt={item.name.split(", ")[0]}>
-            </img>
-
-        </div>
-        <div className ="cartitem-info">
-            <h1>
-            {item.name.split(", ")[0]}
-            </h1>
-            <h2>
-                {"Item cost: "+ item.price}
-            </h2>
-            <h3>
-                {itemNudge}
-            </h3>
-        </div>
-        <div className = "upsell" >
-        <button className = "upsell-button" onClick={() => {
-            upsellItem(item.id, item.upsellProductId)
-            calculateCost(upSellItem.id, upSellItem.price, upSellItem.rebatePercent, upSellItem.rebateQuantity)
-            setUpSell(!upSell)
-
-            }}>
-            Upgrade Item
-        </button>
-        </div>
-        <div className = "adjusters">
-            <button className = "increment-button" onClick={() => {
-                incrementQuantity(item.id,)
-                calculateCost(item.id, item.price, item.rebatePercent, item.rebateQuantity)}}>
-                increment
-            </button>
-            <h4 className = "item-quantity">
-            {itemQuantity}
-            </h4>
-            <button className = "decrement-button" onClick={() => {
-                decrementQuantity(item.id)
-                calculateCost(item.id, item.price, item.rebatePercent, item.rebateQuantity)}}>
-                decrement
-            </button>
-        </div>
-        <h4 className = "item-cost">
-            {itemCost + " DKK"}
-        </h4>
-        <div className ="delete">
-        <button className = "delete-button" onClick={() => {
-            setShow(false)
-            removeItem(item.id)
-            }}>
-            remove 
-        </button>
-        </div>
-        </div>
+    <Item item={item} />
     )
-        if(show && upSell && upSellItem)
-        return (
-        
-            <div className ="cart-container">
-            <div className="image-box">
-                <img src={upSellItem.imageUrl} alt={upSellItem.name.split(",")[0]}>
-                </img>
-    
-            </div>
-            <div className ="cartitem-info">
-                <h1>
-                {upSellItem.name.split(",")[0]}
-                </h1>
-                <h2>
-                {"Item cost: "+ upSellItem.price}
-                </h2>
-                <h3>
-                    {upSellItemNudge}
-                </h3>
-            </div>
-            <div className = "upsell-padding"></div>
-            <div className = "adjusters">
-                <button className = "increment-button"  onClick={() => {
-                    incrementQuantity(upSellItem.id,)
-                    calculateCost(upSellItem.id, upSellItem.price, upSellItem.rebatePercent, upSellItem.rebateQuantity)}}>
-                    increment
-                </button>
-                <h4 className = "item-quantity">
-                {upSellItemQuantity}
-                </h4>
-                <button className = "decrement-button" onClick={() => {
-                    decrementQuantity(upSellItem.id)
-                    calculateCost(upSellItem.id, upSellItem.price, upSellItem.rebatePercent, upSellItem.rebateQuantity)}}>
-                    decrement
-                </button>
-            </div>
-            <h4 className = "item-cost">
-                {upSellItemCost + " DKK"}
-            </h4>
-            <div className ="delete">
-            <button className = "delete-button" onClick={() => {
-                setShow(false)
-                removeItem(upSellItem.id)
-                }}>
-                remove 
-            </button>
-            </div>
-            </div>
-        )
+
+    if(itemData && itemData.show && itemData.upSell && upSellItem)
+    return (
+    <UpsellItem item={upSellItem}/>
+    )
+
     else return <div></div>
 }
 
