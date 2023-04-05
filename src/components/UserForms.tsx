@@ -110,6 +110,8 @@ export function UserForms(){
 
         
     }, [termsInput])
+
+    if (calculateTotal() !== 0)
     return (
 
         <div className = "user-form">
@@ -202,5 +204,8 @@ export function UserForms(){
             </form>
         </div>
 
+    )
+    else return (
+        <h1>Basket is Empty!</h1>
     )
 }
