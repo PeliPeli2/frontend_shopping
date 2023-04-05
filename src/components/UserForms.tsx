@@ -7,13 +7,11 @@ export function UserForms(){
     const {cartItems, calculateTotal} = useCartContext()
 
     const {
-        zipInput, setZipInput, 
-        cityInput, setCityInput, 
+        zipInput, cityInput,
         addressInput, setAddressInput,
         billingInput, setBillingInput, 
         nameInput, setNameInput, 
-        phoneInput, setPhoneInput,
-        emailInput, setEmailInput,
+        phoneInput, emailInput,
         companyInput, setCompanyInput,
         cvrInput, setCvrInput,
         detailsInput, setDetailsInput,
@@ -21,93 +19,19 @@ export function UserForms(){
         marketingInput, setMarketingInput,
         zipError, setZipError,
         cityError, setCityError,
-        addressError, setAddressError,
-        nameError, setNameError,
+        addressError, nameError,
         phoneError, setPhoneError,
         emailError, setEmailError,
-        termsError, setTermsError,
+        termsError,
+        loading, setLoading,
+        zipValidation,
+        validateAddress,
+        validateName,
+        phoneValidation,
+        emailValidation,
+        validateTerms
     
     } = useFormContext()
-
-    const zipToCityMap = fetchZipCodes();
-
-    const [loading, setLoading] = useState(false);
-
-    async function fetchZipCodes() {
-        const response = await fetch("https://api.dataforsyningen.dk/postnumre");
-        const data = await response.json();
-        // create a map of zip codes to city names
-        let zipToCityMap = new Map<string, string>();
-        for (let i = 0; i < data.length; i++) {
-            zipToCityMap.set(data[i]["nr"], data[i]["navn"]);
-        }
-        return zipToCityMap;
-    }
-
-    async function zipValidation(event: React.FormEvent<HTMLInputElement>) {
-        const input = event.currentTarget.value;
-        setZipInput(input)
-        if (await isValidZip(input) || (input == "")) {
-            const city = (await zipToCityMap).get(input) as string;
-            setCityInput(city);
-            setCityError(false)
-            setZipError(false);
-        }
-        else {
-            setZipError(true);
-            if (cityInput == "")
-                setCityInput("")
-    }}
-
-    async function isValidZip(zip: string) {
-        
-        if ((await zipToCityMap).has(zip)) {
-            return true;
-        }
-        return false;
-    }
-    
-    function validateAddress(){
-        if (addressInput == ""){
-            setAddressError(true)
-        }
-        else {setAddressError(false)}
-    }
-
-    function validateName(){
-        if (nameInput == ""){
-            setNameError(true)
-        }
-        else {setNameError(false)}
-    }
-    function phoneValidation(event: React.FormEvent<HTMLInputElement>) {
-        const input = event.currentTarget.value;
-        setPhoneInput(input)
-        if (event.currentTarget.checkValidity()==true) {
-            setPhoneError(false)
-        }
-        else {
-            setPhoneError(true);
-    }}
-    function emailValidation(event: React.FormEvent<HTMLInputElement>){
-        const input = event.currentTarget.value;
-        setEmailInput(input)
-        if (event.currentTarget.checkValidity()==true) {
-            setEmailError(false)
-            return true;
-        }
-        else {
-            setEmailError(true);
-            return false
-    }}
-    function validateTerms(){
-        if (termsInput == true){
-            setTermsError(false)
-        }
-        else {
-            setTermsError(true)
-        }
-    }
 
     async function submit(event: React.FormEvent<HTMLFormElement>){
         validateAddress()
