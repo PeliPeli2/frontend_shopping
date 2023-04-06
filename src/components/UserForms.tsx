@@ -1,121 +1,37 @@
 import { useEffect, useState } from "react";
 import { useCartContext } from "../context/CartContext";
+import { useFormContext } from "../context/FormContext";
 import '../styles/userforms.css'
 export function UserForms(){
 
     const {cartItems, calculateTotal} = useCartContext()
 
-    const zipToCityMap = fetchZipCodes();
-
-    const [zipInput, setZipInput] = useState("");
-    const [zipError, setZipError] = useState(false);
-
-    const [cityInput, setCityInput] = useState("");
-    const [cityError, setCityError] = useState(false);
-
-    const [addressInput, setAddressInput] = useState("");
-    const [addressError, setAddressError] = useState(false);
-
-    const [billingInput, setBillingInput] = useState("");
-
-    const [nameInput, setNameInput] = useState("");
-    const [nameError, setNameError] = useState(false);
-
-    const [phoneInput, setPhoneInput] = useState("");
-    const [phoneError, setPhoneError] = useState(false);
-
-    const [emailInput, setEmailInput] = useState("");
-    const [emailError, setEmailError] = useState(false);
-
-    const [companyInput, setCompanyInput] = useState("");
-
-    const [cvrInput, setCvrInput] = useState("");
-
-    const [detailsInput, setDetailsInput] = useState("");
-
-    const [termsInput, setTermsInput] = useState(false);
-    const [termsError, setTermsError] = useState(false);
-
-    const [marketingInput, setMarketingInput] = useState(false);
-
-    const [loading, setLoading] = useState(false);
-
-    async function fetchZipCodes() {
-        const response = await fetch("https://api.dataforsyningen.dk/postnumre");
-        const data = await response.json();
-        // create a map of zip codes to city names
-        let zipToCityMap = new Map<string, string>();
-        for (let i = 0; i < data.length; i++) {
-            zipToCityMap.set(data[i]["nr"], data[i]["navn"]);
-        }
-        return zipToCityMap;
-    }
-
-    async function zipValidation(event: React.FormEvent<HTMLInputElement>) {
-        const input = event.currentTarget.value;
-        setZipInput(input)
-        if (await isValidZip(input) || (input == "")) {
-            const city = (await zipToCityMap).get(input) as string;
-            setCityInput(city);
-            setCityError(false)
-            setZipError(false);
-        }
-        else {
-            setZipError(true);
-            if (cityInput == "")
-                setCityInput("")
-    }}
-
-    async function isValidZip(zip: string) {
-        
-        if ((await zipToCityMap).has(zip)) {
-            return true;
-        }
-        return false;
-    }
+    const {
+        zipInput, cityInput,
+        addressInput, setAddressInput,
+        billingInput, setBillingInput, 
+        nameInput, setNameInput, 
+        phoneInput, emailInput,
+        companyInput, setCompanyInput,
+        cvrInput, setCvrInput,
+        detailsInput, setDetailsInput,
+        termsInput, setTermsInput,
+        marketingInput, setMarketingInput,
+        zipError, setZipError,
+        cityError, setCityError,
+        addressError, nameError,
+        phoneError, setPhoneError,
+        emailError, setEmailError,
+        termsError,
+        loading, setLoading,
+        zipValidation,
+        validateAddress,
+        validateName,
+        phoneValidation,
+        emailValidation,
+        validateTerms
     
-
-    function validateAddress(){
-        if (addressInput == ""){
-            setAddressError(true)
-        }
-        else {setAddressError(false)}
-    }
-
-    function validateName(){
-        if (nameInput == ""){
-            setNameError(true)
-        }
-        else {setNameError(false)}
-    }
-    function phoneValidation(event: React.FormEvent<HTMLInputElement>) {
-        const input = event.currentTarget.value;
-        setPhoneInput(input)
-        if (event.currentTarget.checkValidity()==true) {
-            setPhoneError(false)
-        }
-        else {
-            setPhoneError(true);
-    }}
-    function emailValidation(event: React.FormEvent<HTMLInputElement>){
-        const input = event.currentTarget.value;
-        setEmailInput(input)
-        if (event.currentTarget.checkValidity()==true) {
-            setEmailError(false)
-            return true;
-        }
-        else {
-            setEmailError(true);
-            return false
-    }}
-    function validateTerms(){
-        if (termsInput == true){
-            setTermsError(false)
-        }
-        else {
-            setTermsError(true)
-        }
-    }
+    } = useFormContext()
 
     async function submit(event: React.FormEvent<HTMLFormElement>){
         validateAddress()
@@ -144,26 +60,33 @@ export function UserForms(){
               {
                 cart: "cartData",
                 total: calculateTotal(),
-                items: cartItems
+                items: cartItems.filter((item) => {
+                    if (item.show === true)
+                    return item
+                })
               }]
-            const responseLogin = await fetch('https://eoevjfaf26tdvot.m.pipedream.net', {
-            method: 'POST',
-            headers: requestHeaders,
-            body: JSON.stringify(body)
-            })
-                 .then((response) => response)
-                 .then((data) => {
-                    console.log(data);
-                    
-
+            const requestOptions = {
+                method: 'POST',
+                headers: requestHeaders,
+                body: JSON.stringify(body)
+            }
+            await fetch('https://eoevjfaf26tdvot.m.pipedream.net', requestOptions)
+                 .then((response) => {
+                    if (!response.ok){
+                        console.log(response.status)
+                        return Promise.reject("network error")
+                    }
+                    else {
+                        console.log(response)
+                    }
                  })
-                 .catch((err) => {
-                    
+                 .catch((err) => {      
                     console.log(err.message);
                  });
             setLoading(false)
-         //   alert("Submission Successfull! Hurray!")
+            alert("Submission Successfull! Hurray!")
         }
+
         else{
             setLoading(false)
             alert("Submission Failed! Basket is empty!")
@@ -187,6 +110,8 @@ export function UserForms(){
 
         
     }, [termsInput])
+
+    if (calculateTotal() !== 0)
     return (
 
         <div className = "user-form">
@@ -255,11 +180,11 @@ export function UserForms(){
                 </textarea>
                 </label>
                 <br></br>
-                <input type="checkbox" onClick={e => {setTermsInput(!termsInput);}} name="terms" id="terms" required/>
+                <input type="checkbox" defaultChecked={termsInput} onClick={e => {setTermsInput(!termsInput);}} name="terms" id="terms" required/>
                     I accept the terms and conditions.
                 {termsError && <div className={"error"}> You must accept the terms and conditions </div>}
                 <br></br>
-                <input type="checkbox" onClick={e => {setMarketingInput(!marketingInput)}} name="marketing" />
+                <input type="checkbox" defaultChecked={marketingInput} onClick={e => {setMarketingInput(!marketingInput)}} name="marketing" />
                     I want to receive marketing emails.
                 <br></br>
                 <div className="submit">
@@ -279,5 +204,8 @@ export function UserForms(){
             </form>
         </div>
 
+    )
+    else return (
+        <h1>Basket is Empty!</h1>
     )
 }

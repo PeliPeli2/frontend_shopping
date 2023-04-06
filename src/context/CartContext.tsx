@@ -6,6 +6,8 @@ type CartProviderProps = {
 }
 
 type CartContext = {
+    setItem: (id: string, upsellid : string) => void
+    getItem: (id: string, upsellid : string) => CartItem | undefined
     getItemQuantity: (id: string) => number
     incrementQuantity: (id: string) => void
     decrementQuantity: (id: string) => void
@@ -24,6 +26,8 @@ type CartItem = {
     id : string
     quantity : number
     total : number
+    show : boolean
+    upSell : boolean
 }
 
 const CartContext = createContext({} as CartContext)
@@ -36,16 +40,33 @@ export function CartContextProvider({ children }: CartProviderProps ){
 
     const [cartItems, setCartItems] = useState<CartItem[]>([])
 
+    function setItem(id: string, upsellid : string){
+        setCartItems(currentItems => {
+            if (currentItems.find(item => item.id === id ) == null && currentItems.find(item => item.id === upsellid ) == null) {
+                return [...currentItems, {id, quantity: 1, total: 0, show : true, upSell : false}]
+            }
+            else {
+                return currentItems
+            }
+        })
+    }
+
+    function getItem(id: string, upsellId : string){
+        if (cartItems.find(item => item.id === id)){
+            return cartItems.find(item => item.id === id)
+        }
+        if (cartItems.find(item => item.id === upsellId)){
+            return cartItems.find(item => item.id === upsellId)
+        }
+        else return 
+    }
+
     function getItemQuantity(id: string){
         return cartItems.find(item => item.id === id)?.quantity || 0
     }
 
     function incrementQuantity(id: string){
         setCartItems(currentItems => {
-            if (currentItems.find(item => item.id === id ) == null){
-                return [...currentItems, {id, quantity: 1, total: 0}]
-            }
-            else {
                 return currentItems.map(item => {
                     if (item.id === id){
                         return {...item,  quantity: item.quantity + 1}
@@ -54,7 +75,6 @@ export function CartContextProvider({ children }: CartProviderProps ){
                         return item
                     }
                 })
-            }
         })
     }
     function decrementQuantity(id: string){
@@ -76,7 +96,17 @@ export function CartContextProvider({ children }: CartProviderProps ){
     }
     function removeItem(id: string){
         setCartItems(currentItems => {
-            return currentItems.filter(item => item.id !== id)
+            if (currentItems.find(item => item.id === id) != null) {
+                return currentItems.map(item => {
+                    if (item.id === id){
+                        return {...item, quantity : 0, total : 0, show : false}
+                    }
+                    else {
+                        return item
+                    }
+                })
+            }
+            else return currentItems
         })
     }
 
@@ -89,7 +119,7 @@ export function CartContextProvider({ children }: CartProviderProps ){
                 else {
                     return currentItems.map(item => {
                         if (item.id === id){
-                            return {...item, quantity : 1, id : upsellId, total : 0}
+                            return {...item, quantity : 1, id : upsellId, total : 0, upSell: true}
                         }
                         else {
                             return item
@@ -176,7 +206,7 @@ export function CartContextProvider({ children }: CartProviderProps ){
         }
     }
     return (
-        <CartContext.Provider value={{getItemQuantity,incrementQuantity, decrementQuantity, removeItem,  upsellItem, cartItems, getCost, calculateCost, calculateTotal, getItemNudge, formatTotal}}>
+        <CartContext.Provider value={{getItemQuantity,incrementQuantity, decrementQuantity, getItem, setItem, removeItem,  upsellItem, cartItems, getCost, calculateCost, calculateTotal, getItemNudge, formatTotal}}>
             {children}
         </CartContext.Provider>
     )
