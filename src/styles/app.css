@@ -17,7 +17,13 @@
 }
 body {
     background-color: white;
-    padding-left: 2em;
+}
+
+.app{
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin: auto;
 }
 
@@ -25,9 +31,9 @@ ul {
   list-style: none;
   width: fit-content;
   padding: 15px;
-  justify-content: center;
   background-color: #3bceac;
   border-radius: 0.6em;
+  outline: black solid 1px;
 }
 h1{
   background: local;
@@ -36,6 +42,12 @@ h2{
   background-color: local;
 }
 
-
+a{}
+.a:hover {
+	color: blue;
+}
+.a:active {
+	color: red;
+}
 /*Note for self, continue to sort out the different issues and possiblely ...
   add more divs to "constrain manipulation of design"*/

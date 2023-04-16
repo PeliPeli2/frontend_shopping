@@ -1,5 +1,8 @@
-div .user-form{
+.user-form{
     width: fit-content;
+    background-color: #3bceac;
+    Padding: 15px;
+    border-radius: 0.6em;
 }
 
 .form{
@@ -31,7 +34,7 @@ textarea{
   }
 
 label h2{
-    background-color: white;
+    background-color: local;
 }
 .text{
     background-color: local;
