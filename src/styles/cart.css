@@ -1,81 +1,96 @@
-* {
-    outline: 0.1px blue
-    
+*{
+    /*outline: 1px solid red;*/
+    /* background-color: #3bceac; */
+    /* ovenstående vil give det et tuquis grøn farve på hele siden*/
   }
+
+/* List elements ccs */  
 li {
 
-    min-width: min-content ;
-    max-width: 50vW;
+    /*min-width: min-content ;*/
+    width: 65vW;
     padding: 0.2em;
-}
-
-
-.total{
-    margin: auto;
-    padding-top: 0;
-    display: flex;
-    place-content: end;
-}
-
-.cart-container{
-    height: 100px;
-    padding-top: 5px;
-    padding-left: 5px;
-    padding-bottom: 5px;
-    display: flex;
-    flex-direction: row;
-    background: linear-gradient(to bottom right, rgb(43, 200, 132), #73a580);
-   }
-.image-box{
-    width: 100px;
-    height: 100px;
-    display: flex;
-    justify-content: center;
-
 }
 
 li div{
     border-radius: 0.4em;
+    
 }
 
 li img {
     height: 90%;
     width: 90%;
     margin: auto;
+    border-radius: 0.4em;
 
 }
+
+/** Cart container which contains a card's info. */
+.cart-container{
+    height: 8vW;
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+    background: linear-gradient(to bottom right, #12da83, #096e42);
+    outline: black solid 1px;
+   }
+
+   /** The image of the item. */
+.image-box{
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    background: local;
+}
+    /** Information on the item. */
 .cartitem-info{
     width: 300px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    
+    background: local;
 }
+    /** Item's Name */
 .cartitem-info h1{
     display: flex;
     justify-content:center;
     margin-block-start: 0;
     margin-block-end: 0.5vw;
-    font-size: calc(1rem + 0.5vw);
+    font-size: 14px; /*calc(0.5rem + 0.4vw);*/
+    background: local;
 }
+    /** Item's Cost */
 .cartitem-info h2{
     display: flex;
     justify-content:center;
     margin-block-start: 0;
     margin-block-end: 0.5vw;
-    font-size: calc(0.5rem + 0.4vw);
+    font-size: 14px; /*calc(0.5rem + 0.4vw);*/
+    background: local;
 }
+    /* Item's additional infomation/describtion */
 .cartitem-info h3{
     display: flex;
     justify-content:center;
     margin-block-start: 0;
     margin-block-end: 0;
-    font-size: calc(0.5rem + 0.4vw);
-}
-.upsell-padding{
-    width: 120px;
+    font-size: 14px; /*calc(0.5rem + 0.4vw);*/
+    background: local;
 }
 
+/*
+    The part controlling the upsell area
+*/
+/** space holder for when the upsell/item upgrade happened so the whole style doesnt change */
+.upsell-padding{
+    width: 120px;
+    background: local;
+}
+
+/** upsell/upgrading an item to more exclusesive and better version */ 
 .upsell{
     width: 120px;
     display: flex;
@@ -84,30 +99,6 @@ li img {
     margin-block-start: 0;
 }
 
-.adjusters {
-    background: local;
-    width: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-.adjusters h4{
-    margin-top: 5px;
-    margin-bottom: 5px;
-    font-weight: bold;
-    background: local;
-    display: flex;
-    justify-content: center;
-}
-
-.item-cost{
-    width: 100px;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-weight: bold;
-}
 .upsell-button {
     width: fit-content;
 	box-shadow: 0px 0px 0px 2px #9fb4f2;
@@ -124,14 +115,31 @@ li img {
 	text-shadow:0px 1px 0px #283966;
     
 }
+
 .upsell-button:hover {
 	background:linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
 	background-color:#476e9e;
 }
+
 .upsell-button:active {
 	position:relative;
 	top:1px;
 }
+
+
+
+
+/* 
+    The part controlling the Adjuster's area
+*/
+.adjusters{
+    background: local;
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;    
+}
+
 .increment-button {
     width: 85px;
 	box-shadow: 0px 0px 0px 2px #9fb4f2;
@@ -156,6 +164,15 @@ li img {
 	top:1px;
 }
 
+.adjusters h4{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    background: local;
+    display: flex;
+    justify-content: center;
+}
+
 .decrement-button {
     width: 85px;
 	box-shadow: 0px 0px 0px 2px #9fb4f2;
@@ -163,7 +180,7 @@ li img {
 	background-color:#7892c2;
 	border-radius:10px;
 	border:1px solid #4e6096;
-	display:inline-block;
+	display:inline-block; /* might delete line if not important*/
     margin: auto;
 	cursor:pointer;
 	color:#ffffff;
@@ -180,6 +197,25 @@ li img {
 	position:relative;
 	top:1px;
 }
+
+
+/* 
+    The part controlling the Item cost's area
+*/
+.item-cost{
+    width: 100px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-weight: bold;
+    background: local;
+}
+
+
+/*
+    The part controlling the delete button's area
+*/
 .delete{
     width: 100px;
     display: flex;
@@ -189,13 +225,13 @@ li img {
     background: local;
 }
 .delete-button {
-    width: fit-content;
+    width:fit-content;
 	box-shadow: 0px 0px 0px 2px #f29f9f;
 	background:linear-gradient(to bottom, #c27878 5%, #9e4747 100%);
 	background-color:#c27878;
 	border-radius:10px;
 	border:1px solid #964e4e;
-	display:inline-block;
+	display:inline-block; /* might delete if unimportant */
     margin: auto;
 	cursor:pointer;
 	color:#ffffff;
@@ -203,6 +239,7 @@ li img {
 	padding:2px 8px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #662828;
+    
 }
 .delete-button:hover {
 	background:linear-gradient(to bottom, #9e4747 5%, #c27878 100%);
@@ -211,4 +248,152 @@ li img {
 .delete-button:active {
 	position:relative;
 	top:1px;
+}
+
+/* For the total at the bottom of the carts item list. */
+.total{
+    margin: auto;
+    padding-top: 0;
+    display: flex;
+    place-content: end;
+}
+
+
+
+/* Media quert for ipad sized screens */
+@media screen and (max-width: 992px){
+    .cartitem-info{
+        width: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        background: local;
+    }
+   
+    .upsell-padding{
+        width: 100px;
+    }
+
+    .upsell{
+        width: 100px;
+    }
+
+
+    .upsell-button {
+        width: fit-content;
+        font-size:10px;       
+    }
+    .adjusters{
+        background: local;
+        width: 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;    
+    }
+    .increment-button {
+        width: 65px;
+        font-size:10px;
+    }
+    
+    .decrement-button {
+        width: 65px;
+        font-size:10px;
+    }
+    .item-cost{
+        width: 80px;
+    }
+    .delete{
+        width: 80px;
+    }
+    .delete-button {
+        width:fit-content;
+        font-size:10px;
+    }
+}
+
+/* Media quert for phone sized screens */
+@media screen and (max-width: 750px){
+    .image-box{
+        width: 75px;
+        height: 75px;
+        display: flex;
+        justify-content: center;
+        background: local;
+    }
+
+.cart-container{
+    height: 80px;
+}
+
+    .cartitem-info{
+        width: 100px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        background: local;
+        }
+
+        .cartitem-info h1{
+            font-size: 13px;
+        }
+        .cartitem-info h2{
+            font-size: 8px;
+        }
+        .cartitem-info h3{
+            font-size: 8px;
+        }
+
+    .upsell-padding{
+            width: 50px;
+        }
+    
+    .upsell{
+            width: 50px;
+        }
+    
+    
+    .upsell-button {
+            width: fit-content;
+            font-size: 8px;       
+        }
+    .adjusters{
+            background: local;
+            width: 65px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;    
+        }
+    .increment-button {
+            width: fit-content;
+            font-size: 8px;
+        }
+        
+    .decrement-button {
+            width: fit-content;
+            font-size: 8px;
+        }
+    .item-cost{
+            width: 50px;
+            font-size: 12px;
+        }
+    .delete{
+            width: 55px;
+        }
+    .delete-button {
+            width:fit-content;
+            font-size: 8px;
+        }
+    .adjusters h4{
+        margin-top: 2px;
+        margin-bottom: 2px;
+        font-weight: bold;
+        background: local;
+        display: flex;
+        justify-content: center;
+        font-size: 12px;
+    }
+    
+    .total{
+        font-size: 12px;
+    }
 }
