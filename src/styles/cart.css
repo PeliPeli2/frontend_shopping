@@ -6,7 +6,6 @@
 
 /* List elements ccs */  
 li {
-
     /*min-width: min-content ;*/
     width: 65vW;
     padding: 0.2em;
@@ -34,7 +33,8 @@ li img {
     display: flex;
     flex-direction: row;
     background: linear-gradient(to bottom right, #12da83, #096e42);
-    outline: black solid 1px;
+    border: black solid 1px;
+    border-radius: 0.4em;
    }
 
    /** The image of the item. */
@@ -262,6 +262,13 @@ li img {
 
 /* Media quert for ipad sized screens */
 @media screen and (max-width: 992px){
+    .image-box{
+        width: 70px;
+        height: 70px;
+        display: flex;
+        justify-content: center;
+        background: local;
+    }
     .cartitem-info{
         width: 200px;
         display: flex;
@@ -395,5 +402,12 @@ li img {
     
     .total{
         font-size: 12px;
+    }
+
+
+    li {
+        /*min-width: min-content ;*/
+        width: 90vW;
+        padding: 0.2em;
     }
 }
