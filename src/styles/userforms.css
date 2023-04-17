@@ -3,7 +3,13 @@
     background-color: #3bceac;
     Padding: 15px;
     border-radius: 0.6em;
-}
+    animation-name: fadein;
+    animation-duration: 1s;
+  }
+  @keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
 
 .form{
     width: fit-content;
