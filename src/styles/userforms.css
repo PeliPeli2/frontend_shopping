@@ -1,5 +1,5 @@
 .user-form{
-    width: fit-content;
+    width: 45vW;
     background-color: #3bceac;
     Padding: 15px;
     border-radius: 0.6em;
@@ -39,6 +39,7 @@ textarea{
 
 .label{
     background-color: local;
+    width: max-content;
   }
 
 label h2{
@@ -52,6 +53,13 @@ label h2{
     display: flex;
     flex-direction: row;
     gap: 10px;
+    width: fit-content;
+}
+.ZipCode input{
+  width: 15vW;
+}
+.City input{
+  width: 20vW;
 }
 
 .loader {

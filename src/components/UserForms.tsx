@@ -119,19 +119,19 @@ export function UserForms(){
             <form onSubmit={submit}>
 
 
-            <label>
+            <label className = "Country">
                     <h2>Country: </h2>
                     Denmark
                 </label>
                 <div className="zip_city">
-                    <label>
+                    <label className = "ZipCode">
                         <h2>Zip Code: </h2>
                         <input type="text" id="zip" value={zipInput} autoFocus={true} onChange={zipValidation}
                             required pattern="[0-9]{4}" name="zip" />
                         {zipError && zipInput == "" && <div className={"error"}> Zip code required </div>}
                         {zipError && zipInput != "" && <div className={"error"}> Invalid zip code </div>}
                     </label>
-                    <label>
+                    <label className = "City">
                         <h2>City: </h2>
                         <input type="text" id="city" value={cityInput || ""}  required name="city" readOnly />
                         {cityError && <div className={"error"}> City required </div>}
