@@ -32,7 +32,7 @@ export function Item ({item}: {item : ItemProp}){
             {item.name.split(", ")[0]}
             </h1>
             <h2>
-                {"Item cost: "+ item.price}
+                {"Item cost: "+ item.price.toFixed(2) + " DKK"}
             </h2>
             <h3>
                 {getItemNudge(item.id, item.rebateQuantity, item.rebatePercent)}
@@ -52,7 +52,7 @@ export function Item ({item}: {item : ItemProp}){
                 incrementQuantity(item.id,)
                 calculateCost(item.id, item.price, item.rebatePercent, item.rebateQuantity)
                 }}>
-                increment
+                +
             </button>
             <h4 className = "item-quantity">
             {getItemQuantity(item.id)}
@@ -61,7 +61,7 @@ export function Item ({item}: {item : ItemProp}){
                 decrementQuantity(item.id)
                 calculateCost(item.id, item.price, item.rebatePercent, item.rebateQuantity)
                 }}>
-                decrement
+                -
             </button>
         </div>
         <h4 className = "item-cost">
