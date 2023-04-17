@@ -31,7 +31,7 @@ export function UpsellItem({item}: {item : ItemProp}){
         {item.name.split(",")[0]}
         </h1>
         <h2>
-        {"Item cost: "+ item.price}
+        {"Item cost: "+ item.price.toLocaleString("da-DK",{minimumFractionDigits:2})}
         </h2>
         <h3>
             {getItemNudge(item.id, item.rebateQuantity, item.rebatePercent)}
@@ -56,7 +56,7 @@ export function UpsellItem({item}: {item : ItemProp}){
         </button>
     </div>
     <h4 className = "item-cost">
-    {getCost(item.id) + " DKK"}
+    {getCost(item.id).toLocaleString("da-DK",{minimumFractionDigits:2}) + " DKK"}
     </h4>
     <div className ="delete">
     <button className = "delete-button" onClick={() => {

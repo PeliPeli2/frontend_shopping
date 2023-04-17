@@ -199,7 +199,7 @@ export function CartContextProvider({ children }: CartProviderProps ){
 
     function formatTotal(total: number){
         if (total != 0){
-            return "Total Cost: " +total + " DKK"
+            return "Total Cost: " + total.toLocaleString("da-DK",{minimumFractionDigits:2}) + " DKK"
         }
         else {
             return "Basket is Empty"
