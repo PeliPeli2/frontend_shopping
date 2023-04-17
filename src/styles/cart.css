@@ -34,8 +34,9 @@ li img {
     display: flex;
     flex-direction: row;
     background: white;
-    border: black solid 1px;
     border-radius: 0.4em;
+    box-shadow: grey 0px 0px 5px 0px;
+
    }
 
    /** The image of the item. */
