@@ -28,6 +28,8 @@ body {
 }
 
 ul {
+  animation-name: fadein;
+  animation-duration: 1s;
   list-style: none;
   width: fit-content;
   padding: 15px;
@@ -35,6 +37,15 @@ ul {
   border-radius: 0.6em;
   border: black solid 1px;
 }
+.user-form{
+  animation-name: fadein;
+  animation-duration: 1s;
+}
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 h1{
   background: local;
 }
