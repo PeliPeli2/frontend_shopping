@@ -42,11 +42,13 @@ h2{
   background-color: local;
 }
 
-a{}
-.a:hover {
+a{
+  cursor: pointer;
+}
+a:hover {
 	color: blue;
 }
-.a:active {
+a:active {
 	color: red;
 }
 /*Note for self, continue to sort out the different issues and possiblely ...
