@@ -33,7 +33,8 @@ ul {
   list-style: none;
   width: fit-content;
   padding: 15px;
-  background-color: lightgrey;
+  background-color: lightgrey
+;
   border-radius: 0.6em;
 }
 .user-form{
