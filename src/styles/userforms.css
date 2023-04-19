@@ -119,6 +119,21 @@ label h2{
     display: flex;
     place-content: end;
   }
+  .submit button:hover{
+    cursor: pointer;
+  }
+  .submit button:active{
+    position: relative;
+  }
+
+  .Terms:hover{
+    cursor: pointer;
+  }
+
+  .Marketing:hover{
+    cursor: pointer;
+  }
+
   form h2{
     font-size: 1em;
   }

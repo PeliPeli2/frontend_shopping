@@ -180,11 +180,11 @@ export function UserForms(){
                 </textarea>
                 </label>
                 <br></br>
-                <input type="checkbox" defaultChecked={termsInput} onClick={e => {setTermsInput(!termsInput);}} name="terms" id="terms" required/>
+                <input className="Terms" type="checkbox" defaultChecked={termsInput} onClick={e => {setTermsInput(!termsInput);}} name="terms" id="terms" required/>
                     I accept the terms and conditions.
                 {termsError && <div className={"error"}> You must accept the terms and conditions </div>}
                 <br></br>
-                <input type="checkbox" defaultChecked={marketingInput} onClick={e => {setMarketingInput(!marketingInput)}} name="marketing" />
+                <input className="Marketing" type="checkbox" defaultChecked={marketingInput} onClick={e => {setMarketingInput(!marketingInput)}} name="marketing" />
                     I want to receive marketing emails.
                 <br></br>
                     </form>
