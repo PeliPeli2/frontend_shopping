@@ -11,12 +11,18 @@
     to   { opacity: 1; }
   }
 
-.form{
+form{
     width: fit-content;
+    margin: auto;
 }
 
 .error {
     color: red
+}
+
+.user-form h1{
+  width: fit-content;
+  margin: auto;
 }
 
 input:required:valid {
@@ -37,13 +43,13 @@ textarea{
 
 
 
-.label{
+label{
     background-color: local;
-    width: max-content;
   }
 
 label h2{
     background-color: local;
+    width: fit-content;
 }
 .text{
     background-color: local;
@@ -55,12 +61,48 @@ label h2{
     gap: 10px;
     width: fit-content;
 }
+
 .ZipCode input{
-  width: 15vW;
+  width: 100px; /* 100 standard */
 }
+
 .City input{
-  width: 20vW;
+  width: 300px; /* 300 standard */
 }
+
+.Address input{
+  width: 418px;
+}
+
+.BilAddress input{
+  width: 418px;
+}
+
+.Name input{
+  width: 418px;
+}
+
+.Phone input{
+  width: 418px;
+}
+
+.Email input{
+  width: 418px;
+}
+
+.CompName input{
+  width: 418px;
+}
+
+.CompCVR input{
+  width: 418px;
+}
+
+.Comments textarea{
+  width: 418px;
+}
+
+
 
 .loader {
     width: fit-content;
@@ -94,4 +136,99 @@ label h2{
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+  }
+
+  @media screen and (max-width: 992px){
+    .user-form{
+      width: fit-content;
+      padding: 10px;
+    }
+
+    .ZipCode input{
+      width: 75px;
+    }
+
+    .City input{
+      width: 225px;
+    }
+
+    .Address input{
+      width: 318px; /* 426px */
+    }
+
+    .BilAddress input{
+      width: 318px;
+    }
+
+    .Name input{
+      width: 318px;
+    }
+
+    .Phone input{
+      width: 318px;
+    }
+
+    .Email input{
+      width: 318px;
+    }
+
+    .CompName input{
+      width: 318px;
+    }
+
+    .CompCVR input{
+      width: 318px;
+    }
+
+    .Comments textarea{
+      width: 318px;
+    }
+  }
+
+  @media screen and (max-width: 750px){
+    .user-form{
+      width: fit-content;
+      padding: 5px;
+    }
+    
+    .ZipCode input{
+      width: 75px;
+    }
+
+    .City input{
+      width: 125px;
+    }
+
+    .Address input{
+      width: 218px;
+    }
+
+    .BilAddress input{
+      width: 218px;
+    }
+
+    .Name input{
+      width: 218px;
+    }
+
+    .Phone input{
+      width: 218px;
+    }
+
+    .Email input{
+      width: 218px;
+    }
+
+    .CompName input{
+      width: 218px;
+    }
+
+    .CompCVR input{
+      width: 218px;
+    }
+
+    .Comments textarea{
+      width: 218px;
+
+    }
   }

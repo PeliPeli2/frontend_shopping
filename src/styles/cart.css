@@ -261,7 +261,16 @@ li img {
     place-content: end;
 }
 
+@media screen and (max-width: 1130px){
+    .image-box{
+        width: 87px;
+        height: 87px;
+        display: flex;
+        justify-content: center;
+        background: local;
+    }
 
+}
 
 /* Media quert for ipad sized screens */
 @media screen and (max-width: 992px){
@@ -272,6 +281,11 @@ li img {
         justify-content: center;
         background: local;
     }
+
+    .cart-container{
+        height: 80px;
+    }
+
     .cartitem-info{
         width: 200px;
         display: flex;
@@ -279,6 +293,7 @@ li img {
         justify-content: flex-start;
         background: local;
     }
+    
    
     .upsell-padding{
         width: 100px;

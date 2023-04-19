@@ -137,43 +137,43 @@ export function UserForms(){
                         {cityError && <div className={"error"}> City required </div>}
                     </label>
                 </div>
-                <label>
+                <label className="Address">
                     <h2>Address: </h2>
                     <input type="text" id="address" value={addressInput} onChange={e =>{setAddressInput(e.target.value)}}  required name="address" />
                     {addressError && addressInput == "" &&  <div className={"error"}> Address required </div>}
                 </label>
-                <label>
+                <label className="BilAddress">
                     <h2>Billing Address: </h2>
                     <input type="text" id="billing" value={billingInput} onChange={e =>setBillingInput(e.target.value)} name="billing" />
                 </label>
-                <label>
+                <label className="Name">
                     <h2>Name: </h2>
                     <input type="text" id="name" value={nameInput} onChange={e => {{setNameInput(e.target.value)}}} required name="name" />
                     {nameError && nameInput == "" && <div className={"error"}> Name required </div>}
                     {nameError && nameInput != "" && <div className={"error"}> Invalid name </div>}
                 </label>
-                <label>
+                <label className="Phone">
                     <h2>Phone Number: </h2>
                     <input type="tel" value={phoneInput} required pattern="[0-9]{8}" name="phone" id="phone" onChange={phoneValidation} />
                     {phoneError && phoneInput == "" && <div className={"error"}> Phone number required</div>}
                     {phoneError && phoneInput != "" && <div className={"error"}> Invalid phone number </div>}
 
                 </label>
-                <label>
+                <label className="Email">
                     <h2> Email: </h2>
                     <input type="email" value={emailInput} required name="email" id="email" onChange={emailValidation} />
                     {emailError && emailInput == "" && <div className={"error"}> Email required </div>}
                     {emailError && emailInput != "" && <div className={"error"}> Invalid Email </div>}
                 </label>
-                <label>
+                <label className="CompName">
                     <h2>Company name: </h2>
                     <input type="text" value={companyInput} name="company" id="company" onChange={e => {setCompanyInput(e.target.value)}} />
                 </label>
-                <label>
+                <label className="CompCVR">
                     <h2>Company CVR: </h2>
                     <input type="text" value={cvrInput} name="cvr" id="cvr" onChange={e => {setCvrInput(e.target.value)}} pattern="{8}" />
                 </label> 
-                <label>
+                <label className="Comments">
                 <h2>Comments: </h2>
                 <textarea value={detailsInput} onChange={e => {setDetailsInput(e.target.value)}} >
 
@@ -187,6 +187,7 @@ export function UserForms(){
                 <input type="checkbox" defaultChecked={marketingInput} onClick={e => {setMarketingInput(!marketingInput)}} name="marketing" />
                     I want to receive marketing emails.
                 <br></br>
+                    </form>
                 <div className="submit">
                 <button onClick={e => {validateName(); validateAddress(); 
                     if (cityInput == ""){setCityError(true)}; 
@@ -201,7 +202,6 @@ export function UserForms(){
                     )}
                     </button>
                 </div>
-            </form>
         </div>
 
     )
