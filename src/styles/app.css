@@ -33,9 +33,9 @@ ul {
   list-style: none;
   width: fit-content;
   padding: 15px;
-  background-color: #3bceac;
+  background-color: lightgrey
+;
   border-radius: 0.6em;
-  border: black solid 1px;
 }
 .user-form{
   animation-name: fadein;
