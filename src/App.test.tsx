@@ -80,17 +80,17 @@ describe ("increment & decrement first item", () => {
     //wait for app to be rendered
     expect(await screen.findByRole("heading", {name: "Shopping Cart"})).toBeInTheDocument()
     //fire event incrementing item
-    fireEvent.click(screen.getAllByRole("button", {name : "increment"})[0])
-    fireEvent.click(screen.getAllByRole("button", {name : "increment"})[0])
+    fireEvent.click(screen.getAllByRole("button", {name : "+"})[0])
+    fireEvent.click(screen.getAllByRole("button", {name : "+"})[0])
 
-    // check if quantity has increased to 2 
+    // check if quantity has increased to 3
+    expect(await screen.findByRole("heading", {name: "3"})).toBeInTheDocument()
+    expect(screen.getAllByRole("heading", {level : 4, name : "3"})[0])
+    // fire event decementing item
+    fireEvent.click(screen.getAllByRole("button", {name : "-"})[0])
+
     expect(await screen.findByRole("heading", {name: "2"})).toBeInTheDocument()
     expect(screen.getAllByRole("heading", {level : 4, name : "2"})[0])
-    // fire event decementing item
-    fireEvent.click(screen.getAllByRole("button", {name : "decrement"})[0])
-
-    expect(await screen.findByRole("heading", {name: "1"})).toBeInTheDocument()
-    expect(screen.getAllByRole("heading", {level : 4, name : "1"})[0])
 
   })
 })
@@ -102,16 +102,11 @@ describe ("check total cost & item cost & total including 10% after 300", () => 
     //wait for app to be rendered
     expect(await screen.findByRole("heading", {name: "Shopping Cart"})).toBeInTheDocument()
 
-    // increment all items to 1
-    const buttons = screen.getAllByRole("button", {name : "increment"})
-    buttons.forEach((item) => {
-      fireEvent.click(item)
-    })
 
     // total should be 560 so if it is 504 it included the discount
-    expect(await screen.findByRole("heading", {name: "Total Cost: 504 DKK"})).toBeInTheDocument()
+    expect(await screen.findByRole("heading", {name: "Total Cost: 504,00 DKK"})).toBeInTheDocument()
     // check first item to see if cost has increased
-    expect (screen.getAllByRole("heading", {name: "150 DKK", level: 4})[0])
+    expect (screen.getAllByRole("heading", {name: "150,00 DKK", level: 4})[0])
 
   })
 })
@@ -124,16 +119,15 @@ describe("check item discount after incrementing & decrementing", () => {
     expect(await screen.findByRole("heading", {name: "Shopping Cart"})).toBeInTheDocument()
 
     //fire event incrementing item
-    fireEvent.click(screen.getAllByRole("button", {name : "increment"})[0])
-    fireEvent.click(screen.getAllByRole("button", {name : "increment"})[0])
+    fireEvent.click(screen.getAllByRole("button", {name : "+"})[0])
 
     // check first item to see if cost of first item is 225 to include the 2 quantity discount
-    expect (screen.getAllByRole("heading", {name: "225 DKK", level: 4})[0]).toBeInTheDocument()
+    expect (screen.getAllByRole("heading", {name: "225,00 DKK", level: 4})[0]).toBeInTheDocument()
 
-    fireEvent.click(screen.getAllByRole("button", {name : "decrement"})[0])
+    fireEvent.click(screen.getAllByRole("button", {name : "-"})[0])
 
     // check first item to see if cost of first item is 150 to remove the discount and reset to normal cost
-    expect (screen.getAllByRole("heading", {name: "150 DKK", level: 4})[0]).toBeInTheDocument()
+    expect (screen.getAllByRole("heading", {name: "150,00 DKK", level: 4})[0]).toBeInTheDocument()
   })
 })
 
@@ -145,16 +139,16 @@ describe ("check total after removing first item", () => {
   expect(await screen.findByRole("heading", {name: "Shopping Cart"})).toBeInTheDocument()
 
   //fire event incrementing item
-  fireEvent.click(screen.getAllByRole("button", {name : "increment"})[0])
+  fireEvent.click(screen.getAllByRole("button", {name : "+"})[0])
 
   // check total to be incremented
-  expect(await screen.findByRole("heading", {name: "Total Cost: 150 DKK"})).toBeInTheDocument()
+  expect(await screen.findByRole("heading", {name: "Total Cost: 571,50 DKK"})).toBeInTheDocument()
 
   //fire event incrementing item
   fireEvent.click(screen.getAllByRole("button", {name : "remove"})[0])
 
   //check total to be empty
-  expect(await screen.findByRole("heading", {name: "Basket is Empty"})).toBeInTheDocument()
+  expect(await screen.findByRole("heading", {name: "Total Cost: 369,00 DKK"})).toBeInTheDocument()
   })
 })
 
