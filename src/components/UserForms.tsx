@@ -187,7 +187,6 @@ export function UserForms(){
                 <input className="Marketing" type="checkbox" defaultChecked={marketingInput} onClick={e => {setMarketingInput(!marketingInput)}} name="marketing" />
                     I want to receive marketing emails.
                 <br></br>
-                    </form>
                 <div className="submit">
                 <button onClick={e => {validateName(); validateAddress(); 
                     if (cityInput == ""){setCityError(true)}; 
@@ -197,11 +196,12 @@ export function UserForms(){
                     validateTerms()}}>
                     {loading ? (
                         <div className="loader"></div>
-                    ) : (
-                        "Submit"
-                    )}
+                        ) : (
+                            "Submit"
+                            )}
                     </button>
                 </div>
+            </form>
         </div>
 
     )
